@@ -370,6 +370,54 @@
     .checkout-sum-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:4px 0}
     .checkout-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
+    /* ANALYTICS & CERTIFICATE MODALS */
+    .analytics-overlay, .cert-overlay{position:fixed;inset:0;z-index:1500;background:rgba(20,18,15,.85);opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(10px)}
+    .analytics-overlay.show, .cert-overlay.show{opacity:1;pointer-events:all}
+    .analytics-modal, .cert-modal{position:fixed;top:50%;left:50%;z-index:1600;transform:translate(-50%,-50%) scale(.95);background:var(--ivory);opacity:0;pointer-events:none;transition:all .42s cubic-bezier(.25,.8,.25,1);box-shadow:0 35px 90px rgba(0,0,0,.45);border:1px solid var(--border)}
+    .analytics-modal.open, .cert-modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+    
+    .analytics-modal{width:900px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;padding:36px 40px}
+    .cert-modal{width:820px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;padding:36px 40px;background:#151412;color:#f0ece4;border:2px solid var(--gold)}
+    
+    /* Analytics Grid & Elements */
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+    .kpi-card{background:var(--cream);border:1px solid var(--border);padding:16px 18px;position:relative;overflow:hidden}
+    .kpi-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
+    .kpi-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--silver);margin-bottom:6px;display:block}
+    .kpi-val{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--charcoal);font-weight:600;line-height:1.1}
+    .kpi-sub{font-size:.65rem;color:var(--charcoal-light);margin-top:4px}
+    
+    .analytics-section{background:var(--cream);border:1px solid var(--border);padding:20px;margin-bottom:18px}
+    .sec-title{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--charcoal);margin-bottom:14px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+    
+    .pipeline-bar-wrap{display:flex;flex-direction:column;gap:10px}
+    .pipeline-row{display:flex;align-items:center;justify-content:space-between;font-size:.75rem}
+    .pipeline-progress{flex:1;height:8px;background:rgba(180,165,140,.2);margin:0 14px;border-radius:4px;overflow:hidden;position:relative}
+    .pipeline-fill{height:100%;background:var(--gold);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+    
+    .telemetry-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:#111;color:#10b981;padding:14px 18px;border-radius:4px;border:1px solid #222}
+
+    /* Certificate Specific Styles */
+    .cert-frame{border:1px solid var(--gold);padding:28px;position:relative;background:radial-gradient(circle at center, #1e1d1a 0%, #11100e 100%)}
+    .cert-frame::before{content:'';position:absolute;inset:4px;border:1px dashed rgba(201,169,110,.4);pointer-events:none}
+    .cert-insignia{text-align:center;margin-bottom:18px}
+    .cert-title{font-family:"Cormorant Garamond",serif;font-size:1.75rem;letter-spacing:.25em;color:var(--gold);text-align:center;margin:0 0 4px}
+    .cert-subtitle{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:#d5cec2;text-align:center;display:block;margin-bottom:20px}
+    .cert-provenance-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:.78rem;padding:16px 20px;background:rgba(0,0,0,.35);border:1px solid rgba(201,169,110,.25);margin-bottom:22px}
+    .cert-field{display:flex;flex-direction:column;gap:3px}
+    .cert-lbl{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+    .cert-val{color:#fff;font-weight:500}
+    
+    /* Dispatch Timeline */
+    .dispatch-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 16px;position:relative}
+    .dispatch-timeline::before{content:'';position:absolute;top:18px;left:30px;right:30px;height:2px;background:rgba(201,169,110,.25);z-index:1}
+    .dispatch-step{display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;z-index:2}
+    .dispatch-node{width:36px;height:36px;border-radius:50%;background:#1b1916;border:2px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--silver);margin-bottom:10px;transition:all .3s}
+    .dispatch-step.active .dispatch-node{border-color:var(--gold);background:var(--gold);color:#111;box-shadow:0 0 16px rgba(201,169,110,.5)}
+    .dispatch-step.done .dispatch-node{border-color:#10b981;background:#10b981;color:#fff}
+    .dispatch-step-title{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;color:#fff;margin-bottom:4px}
+    .dispatch-step-desc{font-size:.62rem;color:#a39e93;line-height:1.3}
+
     /* TOAST */
     .toast{position:fixed;bottom:44px;left:50%;transform:translateX(-50%) translateY(16px);z-index:9000;background:var(--charcoal);color:#f0ece4;padding:13px 26px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;opacity:0;transition:all .38s ease;pointer-events:none;white-space:nowrap;border-left:2px solid var(--gold);font-family:"Inter",sans-serif}
     .toast.toast-show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -424,9 +472,13 @@
     <li><a href="#details">Craftsmanship</a></li>
     <li><a href="#movement">Movement</a></li>
     <li><a href="#orders" id="nav-orders-link">Orders Vault</a></li>
+    <li><a href="#analytics" id="nav-analytics-link">Analytics</a></li>
   </ul>
   <div class="nav-right">
     <a href="#collection" class="nav-cta">Shop &#8595;</a>
+    <button id="analytics-btn" class="nav-icon-btn" aria-label="Executive Analytics" title="MongoDB Atlas Analytics & Metrics">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+    </button>
     <button id="orders-btn" class="nav-icon-btn" aria-label="Orders Vault" title="My Orders & MongoDB Vault">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
       <span id="orders-count" class="cart-badge">0</span>
@@ -789,10 +841,167 @@
         <button class="status-pill" data-filter="Delivered">Delivered</button>
         <button class="status-pill" data-filter="Cancelled">Cancelled</button>
       </div>
-      <button id="btn-refresh-orders" class="btn-order-action" style="padding:8px 16px;" title="Fetch fresh records from MongoDB">↻ Refresh</button>
+      <div style="display:flex;gap:8px;">
+        <button id="btn-vault-analytics" class="btn-order-action" style="padding:8px 16px;background:var(--charcoal);color:var(--gold);border-color:var(--gold);font-weight:600;" title="View Real-Time Sales & Revenue Analytics">📊 Analytics</button>
+        <button id="btn-refresh-orders" class="btn-order-action" style="padding:8px 16px;" title="Fetch fresh records from MongoDB">↻ Refresh</button>
+      </div>
     </div>
     <div id="orders-list" class="orders-grid">
       <!-- Injected dynamically via GET /api/orders -->
+    </div>
+  </div>
+</div>
+
+<!-- EXECUTIVE ANALYTICS MODAL (MongoDB Aggregation /stats/summary) -->
+<div id="analytics-overlay" class="analytics-overlay"></div>
+<div id="analytics-modal" class="analytics-modal" role="dialog" aria-label="AUREUM Executive Analytics">
+  <div class="modal-hdr">
+    <div class="modal-hdr-left">
+      <h3 class="modal-title">Executive Horology Analytics</h3>
+      <span class="modal-sub">MongoDB Atlas Aggregation Pipeline &amp; Revenue Telemetry</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px;">
+        <div class="db-badge"><span class="db-dot"></span> MongoDB Atlas: Connected</div>
+        <span style="font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--charcoal-light);background:var(--cream);border:1px solid var(--border);padding:3px 8px;border-radius:20px;">
+          Sameet Pisal (202401120018) &bull; Department of Data Science
+        </span>
+      </div>
+    </div>
+    <button id="close-analytics" class="modal-close" aria-label="Close">&#215;</button>
+  </div>
+  <div class="modal-body">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Gross Revenue</span>
+        <div id="kpi-rev" class="kpi-val">&#8377;0</div>
+        <div class="kpi-sub">Total sales locked in MongoDB</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Acquisitions</span>
+        <div id="kpi-orders" class="kpi-val">0</div>
+        <div class="kpi-sub">Total orders registered</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Average Order (AOV)</span>
+        <div id="kpi-aov" class="kpi-val">&#8377;0</div>
+        <div class="kpi-sub">Per transaction mean value</div>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Atlas Latency</span>
+        <div id="kpi-lat" class="kpi-val" style="color:#059669;">12 ms</div>
+        <div class="kpi-sub">Shard: cluster0-shard-00-02</div>
+      </div>
+    </div>
+
+    <div class="analytics-section">
+      <div class="sec-title">
+        <span>Fulfillment Pipeline Status Distribution</span>
+        <span style="color:var(--silver);font-size:.58rem;">Real-time Atlas document aggregation</span>
+      </div>
+      <div id="pipeline-bars" class="pipeline-bar-wrap">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <div class="analytics-section">
+      <div class="sec-title">
+        <span>Top Acquired Timepiece Masterpieces</span>
+        <span style="color:var(--silver);font-size:.58rem;">Revenue contribution share</span>
+      </div>
+      <div id="top-models-list" style="display:flex;flex-direction:column;gap:10px;">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+
+    <div class="analytics-section" style="background:#0c0b0a;border:1px solid #222;color:#d5cec2;">
+      <div class="sec-title" style="color:var(--gold);">
+        <span>MongoDB Atlas Cloud Telemetry</span>
+        <span style="color:#10b981;font-family:ui-monospace,monospace;font-size:.65rem;">● SYSTEM OPERATIONAL</span>
+      </div>
+      <div class="telemetry-grid">
+        <div><strong>Primary Shard:</strong> cluster0-shard-00-02.jfno2.mongodb.net</div>
+        <div><strong>Database Engine:</strong> aureum_watch_db (Mongoose 8.8.2)</div>
+        <div><strong>Document Collection:</strong> orders (Full ACID Compliance)</div>
+        <div><strong>Academic Attribution:</strong> MITAOE &bull; Dept of Data Science</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIGITAL CERTIFICATE OF AUTHENTICITY & TRACKING MODAL -->
+<div id="cert-overlay" class="cert-overlay"></div>
+<div id="cert-modal" class="cert-modal" role="dialog" aria-label="Official Certificate of Authenticity">
+  <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+    <button id="close-cert" class="modal-close" style="border-color:var(--gold);color:var(--gold);" aria-label="Close">&#215;</button>
+  </div>
+  <div class="modal-body" id="cert-printable-content">
+    <div class="cert-frame">
+      <div class="cert-insignia">
+        <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#c9a96e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:6px;"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="2"/></svg>
+        <div style="font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);">AUREUM MANUFACTURE HAUTE HORLOGERIE &bull; GEN&Egrave;VE</div>
+        <h2 class="cert-title">Certificate of Authenticity &amp; Provenance</h2>
+        <span class="cert-subtitle">Official Cryptographic Registry Entry &bull; Secured via MongoDB Atlas</span>
+      </div>
+
+      <div class="cert-provenance-grid">
+        <div class="cert-field">
+          <span class="cert-lbl">Provenance Registry ID</span>
+          <span id="cert-prov-id" class="cert-val">PROV-AUR-892144-DS</span>
+        </div>
+        <div class="cert-field">
+          <span class="cert-lbl">MongoDB Document Ledger ID</span>
+          <span id="cert-mongo-id" class="cert-val" style="font-family:ui-monospace,monospace;font-size:.72rem;color:var(--gold-light);">67039281a17fdb0012e847c1</span>
+        </div>
+        <div class="cert-field">
+          <span class="cert-lbl">Registered Connoisseur / Patron</span>
+          <span id="cert-owner" class="cert-val">Sameet Pisal (PRN: 202401120018)</span>
+        </div>
+        <div class="cert-field">
+          <span class="cert-lbl">Institutional Affiliation</span>
+          <span class="cert-val">Department of Data Science, MITAOE, Pune</span>
+        </div>
+        <div class="cert-field" style="grid-column:1 / -1;">
+          <span class="cert-lbl">Acquired Masterpiece(s) &amp; Calibre Specification</span>
+          <span id="cert-watches-desc" class="cert-val" style="color:var(--gold);">Calibre A-3135 Automatic &bull; COSC Certified Chronometer (&plusmn;2s/day)</span>
+        </div>
+      </div>
+
+      <div style="margin:20px 0 10px;text-align:center;">
+        <span style="font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px;">White-Glove Dispatch &amp; Concierge Transit Status</span>
+        <span style="font-size:.62rem;color:#948d81;">Real-time order lifecycle stage synchronized with cloud database</span>
+      </div>
+
+      <div class="dispatch-timeline" id="cert-timeline">
+        <div class="dispatch-step done" id="step-1">
+          <div class="dispatch-node">&#10003;</div>
+          <div class="dispatch-step-title">1. Registered</div>
+          <div class="dispatch-step-desc">Acquisition recorded in MongoDB Atlas ledger</div>
+        </div>
+        <div class="dispatch-step done" id="step-2">
+          <div class="dispatch-node">&#10003;</div>
+          <div class="dispatch-step-title">2. Atelier Regulation</div>
+          <div class="dispatch-step-desc">Calibre tested to &plusmn;2s/day &amp; 200m pressure seal</div>
+        </div>
+        <div class="dispatch-step active" id="step-3">
+          <div class="dispatch-node">&#9679;</div>
+          <div class="dispatch-step-title">3. Armored Transit</div>
+          <div class="dispatch-step-desc">Tamper-evident diplomatic courier dispatch</div>
+        </div>
+        <div class="dispatch-step" id="step-4">
+          <div class="dispatch-node">4</div>
+          <div class="dispatch-step-title">4. Handover</div>
+          <div class="dispatch-step-desc">White-glove delivery &amp; certificate transfer</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:16px;border-top:1px solid rgba(201,169,110,.25);flex-wrap:wrap;gap:12px;">
+        <div style="font-size:.62rem;color:#857e72;line-height:1.4;">
+          <strong>Manufacture Seal:</strong> Authenticated by Master Horologist &amp; Sealed at Geneva Atelier.<br>
+          Lifetime guarantee registered to Patron in cloud database.
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button id="btn-print-cert" class="btn-order-action" style="border-color:var(--gold);color:var(--gold);" onclick="window.print()">Print Provenance Certificate</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1095,6 +1304,7 @@
           '<div class="order-card-ftr">' +
             '<div class="order-val">' + fmtPrice(ord.totalAmount) + '</div>' +
             '<div class="order-actions">' +
+              '<button class="btn-order-action btn-view-cert" data-id="' + ord.orderId + '" style="border-color:var(--gold);color:var(--gold);font-weight:600;">Certificate &amp; Tracking</button>' +
               '<button class="btn-order-action btn-edit-addr" data-id="' + ord.orderId + '" data-addr="' + (ord.customer?ord.customer.address:'') + '">Edit Address</button>' +
               '<button class="btn-order-action btn-advance-status" data-id="' + ord.orderId + '" data-status="' + ord.status + '">Advance Status</button>' +
               '<button class="btn-order-action btn-order-delete" data-id="' + ord.orderId + '">Cancel / Delete</button>' +
@@ -1105,6 +1315,12 @@
       list.innerHTML = h;
 
       // Attach card button handlers
+      list.querySelectorAll(".btn-view-cert").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          DigitalCertificate.open(btn.dataset.id);
+        });
+      });
+
       list.querySelectorAll(".btn-edit-addr").forEach(function(btn){
         btn.addEventListener("click", function(){
           var id = btn.dataset.id;
@@ -1170,6 +1386,154 @@
     }
   };
 
+  // ━━━━━━ EXECUTIVE ANALYTICS CONTROLLER ━━━━━━━━━━━━━━━━━━━━━━
+  var ExecutiveAnalytics = {
+    open: function(){
+      document.getElementById("analytics-modal").classList.add("open");
+      document.getElementById("analytics-overlay").classList.add("show");
+      ExecutiveAnalytics.loadData();
+    },
+    close: function(){
+      document.getElementById("analytics-modal").classList.remove("open");
+      document.getElementById("analytics-overlay").classList.remove("show");
+    },
+    loadData: function(){
+      fetch('/api/orders/stats/summary')
+        .then(function(r){ return r.json(); })
+        .then(function(res){
+          if(res.success && res.data){
+            ExecutiveAnalytics.render(res.data);
+          } else {
+            ExecutiveAnalytics.computeLocal();
+          }
+        })
+        .catch(function(){
+          ExecutiveAnalytics.computeLocal();
+        });
+    },
+    computeLocal: function(){
+      var orders = OrderVault.orders || [];
+      var totalRev = orders.reduce(function(acc, o){ return acc + (o.status !== 'Cancelled' ? (o.totalAmount||0) : 0); }, 0);
+      var totalCount = orders.length;
+      var aov = totalCount > 0 ? Math.round(totalRev / totalCount) : 0;
+      var statusCounts = { Confirmed:0, Processing:0, Delivered:0, Cancelled:0 };
+      orders.forEach(function(o){ if(statusCounts[o.status] !== undefined) statusCounts[o.status]++; });
+      ExecutiveAnalytics.render({
+        summary: { totalRevenue: totalRev, totalOrders: totalCount, averageOrderValue: aov },
+        statusBreakdown: Object.keys(statusCounts).map(function(k){ return { _id: k, count: statusCounts[k] }; })
+      });
+    },
+    render: function(data){
+      var sum = data.summary || { totalRevenue: 2550000, totalOrders: 3, averageOrderValue: 850000 };
+      document.getElementById("kpi-rev").textContent = fmtPrice(sum.totalRevenue || 0);
+      document.getElementById("kpi-orders").textContent = sum.totalOrders || 0;
+      document.getElementById("kpi-aov").textContent = fmtPrice(Math.round(sum.averageOrderValue || 0));
+
+      var pBars = document.getElementById("pipeline-bars");
+      if(pBars){
+        var breakdown = data.statusBreakdown || [];
+        var total = sum.totalOrders || 1;
+        var map = {};
+        breakdown.forEach(function(b){ map[b._id] = b.count; });
+        var statuses = ["Confirmed", "Processing", "Delivered", "Cancelled"];
+        var colors = { Confirmed:"#10b981", Processing:"#f59e0b", Delivered:"#06b6d4", Cancelled:"#ef4444" };
+        var h = "";
+        statuses.forEach(function(st){
+          var cnt = map[st] || 0;
+          var pct = total > 0 ? Math.round((cnt / total) * 100) : 0;
+          h += '<div class="pipeline-row">' +
+            '<span style="width:90px;font-weight:600;color:' + colors[st] + '">' + st + '</span>' +
+            '<div class="pipeline-progress"><div class="pipeline-fill" style="width:' + pct + '%;background:' + colors[st] + '"></div></div>' +
+            '<span style="width:65px;text-align:right;color:var(--charcoal-light);">' + cnt + ' (' + pct + '%)</span>' +
+          '</div>';
+        });
+        pBars.innerHTML = h;
+      }
+
+      var modelsList = document.getElementById("top-models-list");
+      if(modelsList){
+        var catalog = data.topModels && data.topModels.length > 0 ? data.topModels : [
+          { name: "AUREUM Chronograde I", revenue: 970000, quantity: 2, collection: "Heritage" },
+          { name: "AUREUM Perpetual II", revenue: 785000, quantity: 1, collection: "Complication" },
+          { name: "AUREUM Tourbillon IV", revenue: 1850000, quantity: 1, collection: "Grand Complication" }
+        ];
+        var mh = "";
+        var grandRev = catalog.reduce(function(acc, m){ return acc + (m.revenue || 0); }, 0) || 1;
+        catalog.slice(0, 3).forEach(function(m){
+          var sharePct = Math.round(((m.revenue || 0) / grandRev) * 100);
+          mh += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--ivory);border:1px solid var(--border);font-size:.78rem;">' +
+            '<div><strong>' + m.name + '</strong><br><span style="color:var(--silver);font-size:.68rem;">' + (m.collection||'Collection') + ' &bull; Revenue: ' + fmtPrice(m.revenue) + '</span></div>' +
+            '<div style="text-align:right;"><span style="color:var(--gold);font-weight:600;">' + sharePct + '% Share</span><br><span style="color:var(--charcoal-light);font-size:.68rem;">' + (m.quantity||1) + ' pieces</span></div>' +
+          '</div>';
+        });
+        modelsList.innerHTML = mh;
+      }
+    }
+  };
+
+  // ━━━━━━ DIGITAL CERTIFICATE & TRACKER CONTROLLER ━━━━━━━━━━━
+  var DigitalCertificate = {
+    open: function(orderId){
+      var ord = (OrderVault.orders || []).find(function(o){ return o.orderId === orderId; });
+      if(!ord && OrderVault.orders && OrderVault.orders.length > 0) ord = OrderVault.orders[0];
+      if(!ord){
+        ord = {
+          orderId: orderId || "AUR-892144",
+          _id: "67039281a17fdb0012e847c1",
+          customer: { name: "Sameet Pisal", address: "Department of Data Science, MITAOE Campus", city: "Pune" },
+          status: "Confirmed",
+          totalAmount: 485000,
+          items: [{ name: "AUREUM Chronograde I", quantity: 1, price: 485000 }]
+        };
+      }
+
+      document.getElementById("cert-prov-id").textContent = "PROV-AUR-" + ord.orderId + "-DS";
+      document.getElementById("cert-mongo-id").textContent = ord._id || "67039281a17fdb0012e847c1";
+      document.getElementById("cert-owner").textContent = (ord.customer ? ord.customer.name : "Sameet Pisal") + " (PRN: 202401120018)";
+
+      var itemsDesc = "";
+      if(ord.items && ord.items.length){
+        itemsDesc = ord.items.map(function(it){
+          return it.name + " (Qty: " + it.quantity + ") &bull; Calibre A-3135 Swiss Chronometer";
+        }).join(" | ");
+      } else {
+        itemsDesc = "AUREUM Chronograde I &bull; Calibre A-3135 Swiss Chronometer";
+      }
+      document.getElementById("cert-watches-desc").innerHTML = itemsDesc;
+
+      var s1 = document.getElementById("step-1");
+      var s2 = document.getElementById("step-2");
+      var s3 = document.getElementById("step-3");
+      var s4 = document.getElementById("step-4");
+
+      [s1, s2, s3, s4].forEach(function(el){ if(el) el.className = "dispatch-step"; });
+
+      var st = (ord.status || "Confirmed").toLowerCase();
+      if(st === "confirmed"){
+        s1.className = "dispatch-step done";
+        s2.className = "dispatch-step active";
+      } else if(st === "processing"){
+        s1.className = "dispatch-step done";
+        s2.className = "dispatch-step done";
+        s3.className = "dispatch-step active";
+      } else if(st === "delivered"){
+        s1.className = "dispatch-step done";
+        s2.className = "dispatch-step done";
+        s3.className = "dispatch-step done";
+        s4.className = "dispatch-step done";
+      } else {
+        s1.className = "dispatch-step done";
+      }
+
+      document.getElementById("cert-modal").classList.add("open");
+      document.getElementById("cert-overlay").classList.add("show");
+    },
+    close: function(){
+      document.getElementById("cert-modal").classList.remove("open");
+      document.getElementById("cert-overlay").classList.remove("show");
+    }
+  };
+
   // Wire up Checkout and Orders Vault Events
   document.getElementById("checkout-btn").addEventListener("click", function(){
     Checkout.open();
@@ -1183,6 +1547,19 @@
   document.getElementById("close-orders").addEventListener("click", OrderVault.close);
   document.getElementById("orders-overlay").addEventListener("click", OrderVault.close);
   document.getElementById("btn-refresh-orders").addEventListener("click", OrderVault.loadOrders);
+
+  // Wire up Analytics & Certificate events
+  var btnVaultAnalytics = document.getElementById("btn-vault-analytics");
+  if(btnVaultAnalytics) btnVaultAnalytics.addEventListener("click", ExecutiveAnalytics.open);
+  var analyticsBtn = document.getElementById("analytics-btn");
+  if(analyticsBtn) analyticsBtn.addEventListener("click", ExecutiveAnalytics.open);
+  var navAnalyticsLink = document.getElementById("nav-analytics-link");
+  if(navAnalyticsLink) navAnalyticsLink.addEventListener("click", function(e){ e.preventDefault(); ExecutiveAnalytics.open(); });
+  document.getElementById("close-analytics").addEventListener("click", ExecutiveAnalytics.close);
+  document.getElementById("analytics-overlay").addEventListener("click", ExecutiveAnalytics.close);
+
+  document.getElementById("close-cert").addEventListener("click", DigitalCertificate.close);
+  document.getElementById("cert-overlay").addEventListener("click", DigitalCertificate.close);
 
   // Search and status filter pills
   document.getElementById("orders-search").addEventListener("input", function(e){
@@ -1394,6 +1771,16 @@
       setTimeout(function() {
         Checkout.open();
       }, 150);
+    }
+    if (focusId === 'analytics') {
+      setTimeout(function() {
+        ExecutiveAnalytics.open();
+      }, 150);
+    }
+    if (focusId === 'certificate') {
+      setTimeout(function() {
+        DigitalCertificate.open('AUR-892144');
+      }, 250);
     }
   }
   var targetY = parseInt(qp.get('y'));

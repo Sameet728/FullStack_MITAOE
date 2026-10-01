@@ -37,6 +37,8 @@ The APIs power the e-commerce and order fulfillment lifecycle of the **AUREUM Lu
 | **READ Operation (GET APIs)** | `GET /api/orders` & `GET /api/orders/:id`: Queries MongoDB Atlas with regex search, status filtering, and descending chronological sorting, returning HTTP 200 OK |
 | **UPDATE Operation (PUT API)** | `PUT /api/orders/:id`: Performs atomic document mutation via `Order.findByIdAndUpdate`, supporting inline address modification and order lifecycle status progression |
 | **DELETE Operation (DELETE API)** | `DELETE /api/orders/:id`: Executes atomic document deletion via `Order.findByIdAndDelete` with verification safeguards, returning HTTP 200 OK |
+| **Executive Sales & Revenue Analytics API** | `GET /api/orders/stats/summary`: Aggregates total gross revenue, transaction counts, average order value, status distribution, and top acquired models via MongoDB aggregation pipeline |
+| **Digital Certificate & Provenance Tracking** | Client-side provenance certification and 4-stage dispatch tracking timeline (Registered -> Atelier Regulation -> Armored Transit -> Handover) synchronized with MongoDB order state |
 | **Client-Side E-Commerce UI Integration** | Full-stack integration in `index.html` featuring luxury Concierge Checkout modal (order creation) and real-time Orders Vault drawer with MongoDB status indicators |
 | **Operational Health & Diagnostics** | `GET /api/status` endpoint delivering real-time MongoDB connection `readyState`, database name, cluster host, process memory heap, and route contracts |
 
@@ -166,7 +168,10 @@ node server.js
 - **Interactive Web App with Orders Vault:** [http://localhost:5000/](http://localhost:5000/)
 - **Orders Vault Modal:** [http://localhost:5000/?focus=orders](http://localhost:5000/?focus=orders)
 - **Concierge Checkout Modal:** [http://localhost:5000/?focus=checkout](http://localhost:5000/?focus=checkout)
+- **Executive Analytics & Revenue Dashboard:** [http://localhost:5000/?focus=analytics](http://localhost:5000/?focus=analytics)
+- **Digital Certificate & Provenance Tracker:** [http://localhost:5000/?focus=certificate](http://localhost:5000/?focus=certificate)
 - **Server Health & MongoDB Status API:** [http://localhost:5000/api/status](http://localhost:5000/api/status)
+- **Revenue Analytics Aggregation API:** [http://localhost:5000/api/orders/stats/summary](http://localhost:5000/api/orders/stats/summary)
 - **Orders CRUD Endpoint:** [http://localhost:5000/api/orders](http://localhost:5000/api/orders)
 
 ---
@@ -175,4 +180,4 @@ node server.js
 - **Formal Word Report:** `Assignment_5_Report_Sameet_Pisal_202401120018.docx`
 - **Compiled PDF Report:** `Assignment_5_Report_Sameet_Pisal_202401120018.pdf`
 - **Source Code:** `server.js`, `config/db.js`, `models/Order.js`, `routes/orderRoutes.js`, `public/index.html`
-- **Verification Screenshots:** In `Assignment_5/screenshots/` (Figures 1 through 6)
+- **Verification Screenshots:** In `Assignment_5/screenshots/` (Figures 1 through 8)

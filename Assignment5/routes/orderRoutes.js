@@ -407,7 +407,7 @@ router.delete('/:id', async (req, res) => {
 
 // ============================================================================
 // 6. AGGREGATE STATS: GET /api/orders/stats/summary
-// Revenue and order volume analytics
+// Revenue, order volume, status breakdown, and telemetry analytics
 // ============================================================================
 router.get('/stats/summary', async (req, res) => {
   try {
@@ -420,22 +420,53 @@ router.get('/stats/summary', async (req, res) => {
 
     const totalOrders = orders.length;
     const totalRevenue = orders.reduce((acc, o) => acc + (o.status !== 'Cancelled' ? o.totalAmount : 0), 0);
+    const averageOrderValue = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
     const confirmedCount = orders.filter(o => o.status === 'Confirmed').length;
     const processingCount = orders.filter(o => o.status === 'Processing').length;
     const deliveredCount = orders.filter(o => o.status === 'Delivered').length;
     const cancelledCount = orders.filter(o => o.status === 'Cancelled').length;
 
+    // Model breakdown
+    const modelMap = {};
+    orders.forEach(o => {
+      if (Array.isArray(o.items)) {
+        o.items.forEach(it => {
+          if (!modelMap[it.name]) {
+            modelMap[it.name] = { name: it.name, quantity: 0, revenue: 0, collection: it.collectionName || 'Heritage' };
+          }
+          modelMap[it.name].quantity += (it.quantity || 1);
+          modelMap[it.name].revenue += ((it.price || 0) * (it.quantity || 1));
+        });
+      }
+    });
+
+    const topModels = Object.values(modelMap).sort((a, b) => b.revenue - a.revenue);
+
     res.status(200).json({
       success: true,
-      stats: {
-        totalOrders,
-        totalRevenue,
-        confirmedCount,
-        processingCount,
-        deliveredCount,
-        cancelledCount
-      },
-      currency: 'INR'
+      data: {
+        summary: {
+          totalOrders,
+          totalRevenue,
+          averageOrderValue,
+          currency: 'INR'
+        },
+        statusBreakdown: [
+          { _id: 'Confirmed', count: confirmedCount },
+          { _id: 'Processing', count: processingCount },
+          { _id: 'Delivered', count: deliveredCount },
+          { _id: 'Cancelled', count: cancelledCount }
+        ],
+        topModels,
+        telemetry: {
+          cluster: 'cluster0-shard-00-02.jfno2.mongodb.net',
+          dbName: 'aureum_watch_db',
+          collection: 'orders',
+          status: 'Connected (MongoDB Atlas)',
+          student: 'Sameet Pisal (PRN: 202401120018)',
+          department: 'Department of Data Science'
+        }
+      }
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
