@@ -8,7 +8,7 @@ const Header = ({ totalStudents, onQuickEnrollClick }) => {
           <div className="brand-badge">MITAOE</div>
           <div>
             <h1 className="portal-title">Student Information Management System</h1>
-            <p className="portal-subtitle">Department of Computer Engineering &bull; Academic Portal</p>
+            <p className="portal-subtitle">Department of Data Science &bull; Academic Portal</p>
           </div>
         </div>
 

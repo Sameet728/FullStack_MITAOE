@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 const DEPARTMENTS = [
+  'Data Science',
   'Computer Engineering',
   'Information Technology',
-  'Data Science',
   'AI & Machine Learning',
   'Electronics & Telecommunication',
   'Mechanical Engineering',
@@ -17,7 +17,7 @@ const StudentForm = ({ onAddStudent, onUpdateStudent, editingStudent, onCancelEd
     name: '',
     rollNumber: '',
     prn: '',
-    department: 'Computer Engineering',
+    department: 'Data Science',
     semester: 'Semester 5',
     email: '',
     cgpa: '',
@@ -45,7 +45,7 @@ const StudentForm = ({ onAddStudent, onUpdateStudent, editingStudent, onCancelEd
         name: '',
         rollNumber: '',
         prn: '',
-        department: 'Computer Engineering',
+        department: 'Data Science',
         semester: 'Semester 5',
         email: '',
         cgpa: '',
@@ -96,7 +96,7 @@ const StudentForm = ({ onAddStudent, onUpdateStudent, editingStudent, onCancelEd
         name: '',
         rollNumber: '',
         prn: '',
-        department: 'Computer Engineering',
+        department: 'Data Science',
         semester: 'Semester 5',
         email: '',
         cgpa: '',

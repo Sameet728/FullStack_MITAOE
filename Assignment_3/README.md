@@ -3,7 +3,7 @@
 **Student Name:** Sameet Pisal  
 **PRN:** 202401120018  
 **Institution:** MIT Academy of Engineering (MITAOE), Pune  
-**Department:** Department of Computer Engineering  
+**Department:** Department of Data Science  
 **Course:** Full Stack Web Development  
 
 ---

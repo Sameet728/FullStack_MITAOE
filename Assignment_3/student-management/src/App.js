@@ -14,7 +14,7 @@ const INITIAL_STUDENTS = [
     name: 'Sameet Pisal',
     rollNumber: '41',
     prn: '202401120018',
-    department: 'Computer Engineering',
+    department: 'Data Science',
     semester: 'Semester 5',
     email: 'sameet.pisal@mitaoe.ac.in',
     cgpa: '9.45',
@@ -81,7 +81,7 @@ function App() {
   // 1. Persistence via LocalStorage
   const [students, setStudents] = useState(() => {
     try {
-      const saved = localStorage.getItem('mitaoe_students_data');
+      const saved = localStorage.getItem('mitaoe_students_ds_data');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -95,7 +95,7 @@ function App() {
   // Sync to localStorage
   useEffect(() => {
     try {
-      localStorage.setItem('mitaoe_students_data', JSON.stringify(students));
+      localStorage.setItem('mitaoe_students_ds_data', JSON.stringify(students));
     } catch (e) {
       console.error('Failed saving to localStorage', e);
     }
@@ -412,7 +412,7 @@ function App() {
         {/* Footer */}
         <footer className="portal-footer">
           <p>
-            MIT Academy of Engineering (MITAOE), Alandi Road, Pune &bull; Full Stack Web Development Laboratory
+            MIT Academy of Engineering (MITAOE), Alandi Road, Pune &bull; Department of Data Science
           </p>
           <p className="footer-credits">
             Assignment 3: Student Management System in React JS &bull; Engineered by <strong>Sameet Pisal</strong> (PRN: 202401120018)

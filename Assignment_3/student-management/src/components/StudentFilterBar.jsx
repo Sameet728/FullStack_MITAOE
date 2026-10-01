@@ -2,9 +2,9 @@ import React from 'react';
 
 const DEPARTMENTS = [
   'All Departments',
+  'Data Science',
   'Computer Engineering',
   'Information Technology',
-  'Data Science',
   'AI & Machine Learning',
   'Electronics & Telecommunication',
   'Mechanical Engineering',
