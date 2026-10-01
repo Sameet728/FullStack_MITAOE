@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background: #0f172a;
+      margin: 0;
+      padding: 30px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .window {
+      background: #1e293b;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 950px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    .titlebar {
+      background: #0f172a;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+    .dots { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .title { color: #94a3b8; font-size: 13px; font-weight: 500; }
+    .status-chip {
+      background: #065f46;
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+    }
+    .header-bar {
+      background: #111827;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      border-bottom: 1px solid #1f2937;
+    }
+    .method { color: #60a5fa; font-weight: bold; }
+    .url { color: #f8fafc; }
+    .body {
+      padding: 24px;
+      color: #38bdf8;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="title">REST API Client &bull; GET http://localhost:5000/api/status</span>
+      </div>
+      <span class="status-chip">200 OK &bull; 4ms</span>
+    </div>
+    <div class="header-bar">
+      <span class="method">GET</span>
+      <span class="url">http://localhost:5000/api/status</span>
+      <span style="color:#94a3b8;margin-left:auto;">Content-Type: application/json</span>
+    </div>
+    <div class="body">{
+  "status": "online",
+  "serverType": "Node.js Static Web Application Server",
+  "assignment": "Assignment 4: Backend Technologies (Node.js Static Web Server)",
+  "student": {
+    "name": "Sameet Pisal",
+    "prn": "202401120018",
+    "department": "Department of Data Science",
+    "institution": "MIT Academy of Engineering (MITAOE), Pune"
+  },
+  "staticConfig": {
+    "publicDirectory": "C:\\Users\\samee\\Desktop\\FullStack\\public",
+    "indexFile": "index.html",
+    "cachingEnabled": true
+  },
+  "runtime": {
+    "nodeVersion": "v26.7.0",
+    "platform": "win32",
+    "arch": "x64",
+    "uptimeSeconds": 230,
+    "heapUsedMB": 9,
+    "heapTotalMB": 9.63
+  },
+  "timestamp": "2026-10-01T19:31:41.818Z"
+}</div>
+  </div>
+</body>
+</html>

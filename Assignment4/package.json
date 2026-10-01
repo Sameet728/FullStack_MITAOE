@@ -1,0 +1,15 @@
+{
+  "name": "mitaoe-assignment-4-static-server",
+  "version": "1.0.0",
+  "description": "Node.JS Application which serves a static website (AUREUM Luxury Timepieces) for MITAOE Full Stack Web Development",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "author": "Sameet Pisal (PRN: 202401120018)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

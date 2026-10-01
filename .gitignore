@@ -11,6 +11,7 @@ test_*
 
 # Root temp images & MS Word locks
 *.png
+!**/screenshots/*.png
 ~$*
 
 # IDE & OS files
