@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUREUM — Precision, Redefined</title>
+  <meta name="description" content="AUREUM — Shop ultra-premium luxury timepieces. Discover masterpieces engineered for those who expect more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ivory:#faf8f4;--cream:#f5f0e8;--champagne:#e8dcc8;
+      --gold:#c9a96e;--gold-light:#e2c98a;--gold-dark:#a88850;
+      --charcoal:#1a1814;--charcoal-mid:#2d2a25;--charcoal-light:#4a4640;
+      --silver:#9e9b96;--silver-light:#ccc9c2;
+      --border:rgba(180,165,140,0.25);--border-strong:rgba(180,165,140,0.5);
+      --glass-bg:rgba(250,248,244,0.72);
+    }
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{font-family:"Inter",sans-serif;background:var(--ivory);color:var(--charcoal);overflow-x:hidden;cursor:none}
+    #cursor-dot{position:fixed;top:0;left:0;z-index:9999;width:6px;height:6px;border-radius:50%;background:var(--charcoal);pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s}
+    #cursor-ring{position:fixed;top:0;left:0;z-index:9998;width:32px;height:32px;border-radius:50%;border:1px solid rgba(26,24,20,.35);pointer-events:none;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+    #scroll-progress{position:fixed;top:0;left:0;z-index:1000;height:1.5px;background:linear-gradient(90deg,var(--gold),var(--gold-light));width:0%}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:72px;transition:background .4s,border-bottom .4s}
+    nav.scrolled{background:var(--glass-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+    .nav-brand{font-family:"Cormorant Garamond",serif;font-size:1.35rem;font-weight:500;letter-spacing:.28em;color:var(--charcoal);text-decoration:none}
+    .nav-links{display:flex;gap:36px;list-style:none}
+    .nav-links a{font-size:.72rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:var(--charcoal-light);text-decoration:none;position:relative;padding-bottom:2px;transition:color .3s}
+    .nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s cubic-bezier(.25,.8,.25,1)}
+    .nav-links a:hover{color:var(--charcoal)}.nav-links a:hover::after{width:100%}
+    .nav-right{display:flex;align-items:center;gap:12px}
+    .nav-cta{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--charcoal);border:1px solid var(--border-strong);padding:9px 20px;text-decoration:none;transition:all .35s;white-space:nowrap}
+    .nav-cta:hover{background:var(--charcoal);color:var(--ivory)}
+    .nav-icon-btn{background:none;border:1px solid var(--border);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s;position:relative;color:var(--charcoal-light)}
+    .nav-icon-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .nav-icon-btn.logged-in{border-color:var(--gold);background:rgba(201,169,110,.12);color:var(--gold)}
+    .cart-badge{position:absolute;top:-5px;right:-5px;background:var(--gold);color:var(--charcoal);font-size:.5rem;font-weight:700;width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;letter-spacing:0;line-height:1}
+    .nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none}
+    .nav-hamburger span{display:block;width:24px;height:1px;background:var(--charcoal)}
+
+    /* SECTION INDICATOR */
+    #section-indicator{position:fixed;right:36px;top:50%;z-index:800;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
+    .sec-dot{width:5px;height:5px;border-radius:50%;background:var(--silver-light);transition:all .4s}
+    .sec-dot.active{background:var(--gold);transform:scale(1.6)}
+
+    /* HERO */
+    #hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--ivory)}
+    .hero-bg-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .hero-grid-lines{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(180,165,140,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(180,165,140,.07) 1px,transparent 1px);background-size:80px 80px}
+    .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:80px;max-width:1280px;width:100%;padding:0 60px}
+    .hero-text-side{opacity:0;transform:translateX(-40px)}
+    .hero-eyebrow{font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:400;display:block}
+    .hero-title{font-family:"Cormorant Garamond",serif;font-size:clamp(3.2rem,5.5vw,6rem);font-weight:300;line-height:1.05;color:var(--charcoal);margin-bottom:28px}
+    .hero-title em{font-style:italic}
+    .hero-sub{font-size:.82rem;letter-spacing:.12em;color:var(--silver);font-weight:300;line-height:1.7;text-transform:uppercase}
+    .hero-divider{width:40px;height:1px;background:var(--gold);margin:32px 0}
+    .hero-meta{display:flex;gap:32px;margin-top:44px}
+    .hero-meta-item{text-align:center}
+    .hero-meta-num{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;color:var(--charcoal);display:block;line-height:1}
+    .hero-meta-label{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);margin-top:6px;display:block}
+    .hero-image-side{display:flex;justify-content:center;align-items:center;opacity:0;transform:scale(.9) translateY(20px)}
+    .hero-watch-wrap{position:relative;width:480px;height:480px;display:flex;align-items:center;justify-content:center}
+    .hero-watch-ring{position:absolute;border-radius:50%;border:1px solid var(--border);animation:rotate-ring 30s linear infinite;width:100%;height:100%}
+    .hero-watch-ring:nth-child(2){width:80%;height:80%;animation-duration:22s;animation-direction:reverse}
+    .hero-watch-ring:nth-child(3){width:60%;height:60%;animation-duration:18s;border-style:dashed;border-color:rgba(201,169,110,.2)}
+    @keyframes rotate-ring{to{transform:rotate(360deg)}}
+    .hero-watch-img{width:340px;height:340px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 40px 80px rgba(0,0,0,.18));transition:transform .6s cubic-bezier(.25,.8,.25,1)}
+    .hero-watch-img:hover{transform:scale(1.04) rotate(-2deg)}
+    .scroll-indicator{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fade-up 1s 2.5s ease forwards}
+    @keyframes fade-up{to{opacity:1}}
+    .scroll-indicator span{font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;color:var(--silver)}
+    .scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scroll-drop 1.8s ease-in-out infinite}
+    @keyframes scroll-drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+    /* SHARED */
+    .section-label{font-size:.6rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);font-weight:400}
+    .section-number{font-family:"Cormorant Garamond",serif;font-size:.85rem;color:var(--silver-light);letter-spacing:.1em;margin-bottom:14px;display:block}
+    .gold-line{width:48px;height:1px;background:var(--gold);margin:36px 0}
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.25,.8,.25,1),transform .9s cubic-bezier(.25,.8,.25,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-50px);transition:opacity .9s ease,transform .9s ease}
+    .reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{opacity:0;transform:translateX(50px);transition:opacity .9s ease,transform .9s ease}
+    .reveal-right.visible{opacity:1;transform:translateX(0)}
+    .delay-1{transition-delay:.12s}.delay-2{transition-delay:.24s}.delay-3{transition-delay:.36s}
+
+    /* ART */
+    #art{padding:160px 60px;background:var(--ivory)}
+    .art-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:120px;align-items:center}
+    .art-img-wrap{position:relative;overflow:hidden}
+    .art-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.25,.8,.25,1)}
+    .art-img-wrap:hover .art-img{transform:scale(1.04)}
+    .art-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(250,248,244,.4) 0%,transparent 60%)}
+    .art-text h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,3.5vw,4.2rem);font-weight:300;line-height:1.15;color:var(--charcoal);margin:20px 0 32px}
+    .art-text h2 em{font-style:italic}
+    .art-text p{font-size:.9rem;line-height:1.9;color:var(--charcoal-light);font-weight:300;max-width:440px}
+    .art-text p+p{margin-top:20px}
+
+    /* SPECS */
+    #specs{padding:160px 60px;background:var(--cream)}
+    .specs-inner{max-width:1280px;margin:0 auto}
+    .specs-header{text-align:center;margin-bottom:100px}
+    .specs-header h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.6rem,4vw,5rem);font-weight:300;color:var(--charcoal);margin-top:16px}
+    .specs-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border)}
+    .spec-card{padding:56px 32px;background:var(--cream);border-right:1px solid var(--border);transition:background .35s;position:relative;overflow:hidden}
+    .spec-card:last-child{border-right:none}
+    .spec-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+    .spec-card:hover{background:var(--ivory)}.spec-card:hover::after{transform:scaleX(1)}
+    .spec-num{font-size:.6rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:28px}
+    .spec-value{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,3.5vw,4.5rem);font-weight:300;color:var(--charcoal);line-height:1;display:block;margin-bottom:12px}
+    .spec-unit{font-size:.65rem;letter-spacing:.2em;color:var(--silver);text-transform:uppercase;display:block}
+
+    /* DETAILS */
+    #details{padding:160px 60px;background:var(--ivory)}
+    .details-inner{max-width:1280px;margin:0 auto}
+    .details-header{margin-bottom:80px}
+    .details-header h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,3.5vw,4.5rem);font-weight:300;color:var(--charcoal);margin-top:16px}
+    .details-showcase{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:start}
+    .detail-main-img{position:relative;overflow:hidden}
+    .detail-main-img img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .7s}
+    .detail-main-img:hover img{transform:scale(1.04)}
+    .detail-annotations{position:absolute;inset:0;pointer-events:none}
+    .annotation{position:absolute;display:flex;align-items:center;gap:10px}
+    .annotation-dot{width:7px;height:7px;border-radius:50%;border:1px solid var(--gold);background:rgba(201,169,110,.3);flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite}
+    @keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(201,169,110,.4)}50%{box-shadow:0 0 0 6px rgba(201,169,110,0)}}
+    .annotation-line{height:1px;background:var(--gold);opacity:.5}
+    .annotation-text{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--charcoal-light);white-space:nowrap}
+    .detail-parts{display:flex;flex-direction:column}
+    .detail-part{padding:28px 0;border-bottom:1px solid var(--border)}
+    .detail-part:first-child{border-top:1px solid var(--border)}
+    .detail-part-name{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+    .detail-part-desc{font-family:"Cormorant Garamond",serif;font-size:1.15rem;color:var(--charcoal)}
+    .detail-part-sub{font-size:.75rem;color:var(--silver);margin-top:4px;font-weight:300;line-height:1.6}
+
+    /* HSCROLL */
+    #hscroll{padding:80px 0;background:var(--ivory);overflow:hidden}
+    .hscroll-track{display:flex;gap:24px;animation:ticker 28s linear infinite;width:max-content}
+    .hscroll-track:hover{animation-play-state:paused}
+    @keyframes ticker{to{transform:translateX(-50%)}}
+    .hscroll-item{flex-shrink:0;width:320px;height:220px;overflow:hidden;position:relative}
+    .hscroll-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .hscroll-item:hover img{transform:scale(1.06)}
+    .hscroll-caption{position:absolute;bottom:0;left:0;right:0;padding:14px 18px;background:linear-gradient(to top,rgba(26,24,20,.7),transparent);font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(240,236,228,.7)}
+
+    /* COLLECTION / WATCH GRID */
+    #collection{padding:160px 60px;background:var(--cream)}
+    .collection-inner{max-width:1280px;margin:0 auto}
+    .collection-header{text-align:center;margin-bottom:80px}
+    .collection-header h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.6rem,4vw,5.5rem);font-weight:300;color:var(--charcoal);margin-top:16px}
+    .collection-header p{font-size:.85rem;color:var(--silver);max-width:520px;margin:20px auto 0;line-height:1.8;font-weight:300}
+    .watch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+    .watch-card{background:var(--ivory);position:relative;overflow:hidden;transition:transform .5s cubic-bezier(.25,.8,.25,1)}
+    .watch-card:hover{z-index:2;transform:scale(1.015)}
+    .watch-card-img-wrap{position:relative;overflow:hidden;aspect-ratio:1}
+    .watch-card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .9s cubic-bezier(.25,.8,.25,1)}
+    .watch-card:hover .watch-card-img{transform:scale(1.1)}
+    .watch-card-overlay{position:absolute;inset:0;background:rgba(26,24,20,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .45s ease;backdrop-filter:blur(3px)}
+    .watch-card:hover .watch-card-overlay{opacity:1}
+    .add-cart-btn{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:var(--ivory);border:1px solid rgba(255,255,255,.45);padding:13px 30px;background:transparent;cursor:none;transition:all .3s;font-family:"Inter",sans-serif;font-weight:400}
+    .add-cart-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--charcoal)}
+    .watch-card-body{padding:28px 30px 32px}
+    .watch-coll-tag{font-size:.52rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+    .watch-card-name{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:400;color:var(--charcoal);line-height:1.2;margin-bottom:6px}
+    .watch-card-tagline{font-size:.78rem;color:var(--silver);font-weight:300;margin-bottom:16px;line-height:1.5}
+    .watch-card-specs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .watch-spec-chip{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--silver-light);background:rgba(180,165,140,.12);padding:4px 10px;border:1px solid var(--border)}
+    .watch-card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border)}
+    .watch-card-price{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:300;color:var(--charcoal)}
+    .add-cart-btn-sm{width:34px;height:34px;border-radius:50%;border:1px solid var(--border-strong);background:transparent;font-size:1.1rem;color:var(--charcoal-light);display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s;font-family:"Inter",sans-serif;line-height:1}
+    .add-cart-btn-sm:hover{background:var(--gold);border-color:var(--gold);color:var(--charcoal)}
+
+    /* MATERIALS */
+    #materials{padding:160px 60px;background:var(--ivory)}
+    .materials-inner{max-width:1280px;margin:0 auto}
+    .materials-header{text-align:center;margin-bottom:100px}
+    .materials-header h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,3.5vw,5rem);font-weight:300;color:var(--charcoal);margin-top:16px}
+    .materials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+    .material-card{overflow:hidden;background:var(--cream);border:1px solid var(--border);transition:transform .4s,box-shadow .4s}
+    .material-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.08)}
+    .material-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .7s}
+    .material-card:hover .material-img{transform:scale(1.05)}
+    .material-body{padding:36px 32px}
+    .material-name{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block}
+    .material-title{font-family:"Cormorant Garamond",serif;font-size:1.6rem;font-weight:400;color:var(--charcoal);line-height:1.2;margin-bottom:14px}
+    .material-desc{font-size:.8rem;line-height:1.8;color:var(--charcoal-light);font-weight:300}
+
+    /* MOVEMENT */
+    #movement{padding:160px 60px;background:var(--charcoal);overflow:hidden;position:relative}
+    .movement-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+    .movement-inner{max-width:1280px;margin:0 auto;position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+    .movement-text h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,3.5vw,4.5rem);font-weight:300;color:#f0ece4;line-height:1.15;margin:20px 0 32px}
+    .movement-text h2 em{font-style:italic;color:rgba(201,169,110,.8)}
+    .movement-text p{font-size:.88rem;line-height:1.9;color:rgba(255,255,255,.4);font-weight:300;margin-bottom:16px}
+    .movement-stats{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:48px}
+    .mvmt-stat{border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
+    .mvmt-stat-val{font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:300;color:var(--gold-light);display:block;line-height:1}
+    .mvmt-stat-lbl{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:6px;display:block}
+    .movement-img-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+    .m-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,169,110,.15);animation:rotate-ring 40s linear infinite;width:460px;height:460px}
+    .m-ring:nth-child(2){width:360px;height:360px;animation-direction:reverse;animation-duration:28s}
+    .m-ring:nth-child(3){width:260px;height:260px;animation-duration:18s;border-style:dashed}
+    .movement-watch-img{width:340px;height:340px;object-fit:contain;position:relative;z-index:2;filter:brightness(1.05) drop-shadow(0 0 60px rgba(201,169,110,.15));animation:float-watch 6s ease-in-out infinite}
+    @keyframes float-watch{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+    /* STATEMENT */
+    #statement{padding:200px 60px;background:var(--ivory);text-align:center}
+    .statement-inner{max-width:900px;margin:0 auto}
+    .statement-quote{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,5vw,6.5rem);font-weight:300;line-height:1.1;color:var(--charcoal)}
+    .statement-quote em{font-style:italic;color:var(--silver)}
+    .statement-attr{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--silver);margin-top:48px;display:block}
+
+    /* DARK BAND */
+    .dark-band{padding:140px 60px;position:relative;overflow:hidden;text-align:center;background:var(--charcoal-mid)}
+    .dark-band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.18}
+    .band-content{position:relative;z-index:2;max-width:800px;margin:0 auto}
+    .band-eyebrow{font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:28px}
+    .band-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.5rem,4.5vw,5.5rem);font-weight:300;line-height:1.1;color:#f0ece4}
+
+    /* FINAL REVEAL */
+    #reveal-section{padding:160px 60px;background:var(--cream)}
+    .reveal-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1280px;margin:0 auto}
+    .reveal-img-frame{position:relative;overflow:hidden;border:1px solid var(--border)}
+    .reveal-img-frame img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;transition:transform .8s}
+    .reveal-img-frame:hover img{transform:scale(1.04)}
+    .reveal-corner{position:absolute;width:24px;height:24px;border-color:var(--gold);border-style:solid}
+    .reveal-corner.tl{top:-1px;left:-1px;border-width:1px 0 0 1px}
+    .reveal-corner.tr{top:-1px;right:-1px;border-width:1px 1px 0 0}
+    .reveal-corner.bl{bottom:-1px;left:-1px;border-width:0 0 1px 1px}
+    .reveal-corner.br{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
+    .reveal-text h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,3.5vw,5rem);font-weight:300;color:var(--charcoal);line-height:1.1;margin:16px 0 36px}
+    .reveal-text h2 em{font-style:italic}
+    .reveal-text p{font-size:.88rem;line-height:1.9;color:var(--charcoal-light);font-weight:300;margin-bottom:18px}
+    .feature-list{list-style:none;margin-top:40px}
+    .feature-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);font-size:.82rem;color:var(--charcoal-light);font-weight:300}
+    .feature-list li::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+
+    /* FOOTER */
+    footer{background:var(--charcoal);padding:120px 60px 60px}
+    .footer-inner{max-width:1280px;margin:0 auto}
+    .footer-statement{font-family:"Cormorant Garamond",serif;font-size:clamp(3rem,6vw,7rem);font-weight:300;color:#f0ece4;line-height:1;margin-bottom:24px}
+    .footer-statement em{font-style:italic;color:rgba(201,169,110,.7)}
+    .footer-tagline{font-size:.8rem;color:rgba(255,255,255,.3);letter-spacing:.15em;font-weight:300;margin-bottom:80px}
+    .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:40px;border-top:1px solid rgba(255,255,255,.08)}
+    .footer-brand{font-family:"Cormorant Garamond",serif;font-size:1.1rem;color:#f0ece4;letter-spacing:.2em}
+    .footer-nav{display:flex;gap:32px;list-style:none}
+    .footer-nav a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .3s}
+    .footer-nav a:hover{color:var(--gold)}
+    .footer-copy{font-size:.6rem;color:rgba(255,255,255,.2);letter-spacing:.12em;text-transform:uppercase}
+
+    /* CART SIDEBAR */
+    .cart-overlay{position:fixed;inset:0;z-index:1100;background:rgba(26,24,20,.55);opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(4px)}
+    .cart-overlay.show{opacity:1;pointer-events:all}
+    .cart-sidebar{position:fixed;top:0;right:0;bottom:0;z-index:1200;width:420px;max-width:100vw;background:var(--charcoal);display:flex;flex-direction:column;transform:translateX(105%);transition:transform .48s cubic-bezier(.25,.8,.25,1);box-shadow:-20px 0 60px rgba(0,0,0,.3)}
+    .cart-sidebar.open{transform:translateX(0)}
+    .cart-header{padding:28px 32px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+    .cart-title-wrap{}
+    .cart-title{font-family:"Cormorant Garamond",serif;font-size:1.25rem;color:#f0ece4;letter-spacing:.12em;font-weight:300;display:block}
+    .cart-title-sub{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.25);display:block;margin-top:5px}
+    .cart-close{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5);width:34px;height:34px;border-radius:50%;cursor:none;font-size:.9rem;transition:all .3s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .cart-close:hover{border-color:var(--gold);color:var(--gold)}
+    .cart-items{flex:1;overflow-y:auto;padding:20px 32px;scrollbar-width:thin;scrollbar-color:rgba(201,169,110,.25) transparent}
+    .cart-empty{text-align:center;padding:64px 0}
+    .cart-empty-icon{font-size:2rem;opacity:.2;margin-bottom:16px;display:block}
+    .cart-empty p{font-family:"Cormorant Garamond",serif;font-size:1.15rem;margin-bottom:8px;color:rgba(255,255,255,.35)}
+    .cart-empty-sub{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+    .cart-item{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start}
+    .cart-item:last-child{border-bottom:none}
+    .cart-item-img{width:72px;height:72px;object-fit:cover;flex-shrink:0;opacity:.9}
+    .cart-item-info{flex:1;min-width:0}
+    .cart-item-name{font-family:"Cormorant Garamond",serif;font-size:1rem;color:#f0ece4;margin-bottom:3px;line-height:1.3}
+    .cart-item-collection{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:8px}
+    .cart-item-price{font-size:.82rem;color:var(--gold-light);letter-spacing:.04em}
+    .cart-item-controls{display:flex;align-items:center;gap:8px;margin-top:10px}
+    .qty-btn{width:26px;height:26px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.55);font-size:.9rem;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .qty-btn:hover{border-color:var(--gold);color:var(--gold)}
+    .qty-val{font-size:.82rem;color:#f0ece4;min-width:22px;text-align:center}
+    .cart-remove{background:none;border:none;color:rgba(255,255,255,.2);font-size:.75rem;cursor:none;padding:3px 6px;transition:color .3s;margin-left:6px}
+    .cart-remove:hover{color:rgba(200,70,70,.8)}
+    .cart-footer{padding:24px 32px;border-top:1px solid rgba(255,255,255,.07);flex-shrink:0}
+    .cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:22px}
+    .cart-total-label{font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+    #cart-total-val{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:#f0ece4;font-weight:300}
+    .checkout-btn{width:100%;padding:16px;background:var(--gold);border:none;color:var(--charcoal);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;font-family:"Inter",sans-serif;cursor:none;transition:all .35s;font-weight:500}
+    .checkout-btn:hover{background:var(--gold-light)}
+
+    /* AUTH MODAL */
+    .auth-overlay{position:fixed;inset:0;z-index:1300;background:rgba(26,24,20,.7);opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(8px)}
+    .auth-overlay.show{opacity:1;pointer-events:all}
+    .auth-modal{position:fixed;top:50%;left:50%;z-index:1400;transform:translate(-50%,-50%) scale(.93);width:440px;max-width:94vw;background:var(--ivory);padding:52px 44px 48px;opacity:0;pointer-events:none;transition:all .42s cubic-bezier(.25,.8,.25,1)}
+    .auth-modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+    .auth-close{position:absolute;top:18px;right:18px;background:none;border:1px solid var(--border);font-size:.8rem;color:var(--silver);cursor:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;transition:all .3s;border-radius:50%}
+    .auth-close:hover{color:var(--charcoal);border-color:var(--charcoal)}
+    .auth-brand{font-family:"Cormorant Garamond",serif;font-size:1.5rem;letter-spacing:.32em;color:var(--charcoal);text-align:center;font-weight:500}
+    .auth-brand-sub{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);text-align:center;margin:6px 0 36px;display:block}
+    .auth-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:32px}
+    .auth-tab{flex:1;background:none;border:none;padding:12px;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--silver);cursor:none;transition:all .3s;position:relative;font-family:"Inter",sans-serif}
+    .auth-tab::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+    .auth-tab.active{color:var(--charcoal)}.auth-tab.active::after{transform:scaleX(1)}
+    .auth-form{display:none}.auth-form.active{display:block}
+    .form-group{margin-bottom:18px}
+    .form-group label{display:block;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--charcoal-light);margin-bottom:8px}
+    .form-group input{width:100%;padding:12px 16px;border:1px solid var(--border);background:var(--cream);color:var(--charcoal);font-family:"Inter",sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;border-radius:0}
+    .form-group input:focus{border-color:var(--gold)}
+    .form-group input::placeholder{color:var(--silver-light)}
+    .auth-submit{width:100%;padding:15px;background:var(--charcoal);border:none;color:var(--ivory);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;font-family:"Inter",sans-serif;cursor:none;transition:all .35s;margin-top:8px;font-weight:400}
+    .auth-submit:hover{background:var(--charcoal-mid)}
+    .auth-error{font-size:.72rem;color:#b03030;margin-top:10px;text-align:center;min-height:18px;letter-spacing:.04em}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:44px;left:50%;transform:translateX(-50%) translateY(16px);z-index:9000;background:var(--charcoal);color:#f0ece4;padding:13px 26px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;opacity:0;transition:all .38s ease;pointer-events:none;white-space:nowrap;border-left:2px solid var(--gold);font-family:"Inter",sans-serif}
+    .toast.toast-show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    /* RESPONSIVE */
+    @media(max-width:1024px){
+      .hero-inner,.art-inner,.movement-inner,.reveal-grid{grid-template-columns:1fr;gap:60px}
+      .hero-text-side{text-align:center}.hero-meta{justify-content:center}
+      .hero-image-side{order:-1}.hero-watch-wrap{width:340px;height:340px}.hero-watch-img{width:250px;height:250px}
+      .specs-grid{grid-template-columns:repeat(3,1fr)}.materials-grid{grid-template-columns:1fr 1fr}.details-showcase{grid-template-columns:1fr}
+      .watch-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:768px){
+      nav{padding:0 24px;height:64px}.nav-links{display:none}.nav-hamburger{display:flex}
+      #hero,#art,#specs,#details,#materials,#movement,#statement,#reveal-section,#collection{padding:100px 24px}
+      .dark-band{padding:80px 24px}
+      .specs-grid{grid-template-columns:1fr 1fr;display:flex;flex-wrap:wrap}.spec-card{flex:1 1 calc(50% - 1px)}
+      .materials-grid,.watch-grid{grid-template-columns:1fr}
+      .hero-watch-wrap{width:280px;height:280px}.hero-watch-img{width:210px;height:210px}
+      .m-ring{width:300px!important;height:300px!important}.m-ring:nth-child(2){width:220px!important;height:220px!important}.m-ring:nth-child(3){width:150px!important;height:150px!important}
+      .movement-watch-img{width:220px;height:220px}
+      .footer-bottom{flex-direction:column;gap:24px;text-align:center}.footer-nav{flex-wrap:wrap;justify-content:center;gap:20px}
+      body{cursor:auto}#cursor-dot,#cursor-ring,#section-indicator{display:none}
+      .cart-sidebar{width:100%}
+      .auth-modal{padding:40px 24px}
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="scroll-progress"></div>
+
+<div id="section-indicator">
+  <div class="sec-dot active" data-sec="hero"></div>
+  <div class="sec-dot" data-sec="art"></div>
+  <div class="sec-dot" data-sec="specs"></div>
+  <div class="sec-dot" data-sec="details"></div>
+  <div class="sec-dot" data-sec="collection"></div>
+  <div class="sec-dot" data-sec="materials"></div>
+  <div class="sec-dot" data-sec="movement"></div>
+  <div class="sec-dot" data-sec="statement"></div>
+  <div class="sec-dot" data-sec="final"></div>
+</div>
+
+<nav id="main-nav">
+  <a href="#hero" class="nav-brand">AUREUM</a>
+  <ul class="nav-links">
+    <li><a href="#art">Story</a></li>
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#details">Craftsmanship</a></li>
+    <li><a href="#movement">Movement</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#collection" class="nav-cta">Shop &#8595;</a>
+    <button id="user-btn" class="nav-icon-btn" aria-label="Account" title="Sign In">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    </button>
+    <button id="cart-btn" class="nav-icon-btn" aria-label="Cart" title="Your Collection">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span id="cart-count" class="cart-badge">0</span>
+    </button>
+  </div>
+  <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero" data-sec="hero">
+  <div class="hero-bg-glow"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-inner">
+    <div class="hero-text-side" id="hero-text">
+      <span class="hero-eyebrow">AUREUM &mdash; Collection I</span>
+      <h1 class="hero-title">Precision,<br><em>Redefined.</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Engineered for those<br>who expect more.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><span class="hero-meta-num" data-counter="72">0</span><span class="hero-meta-label">Hrs Reserve</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-num" data-counter="42">0</span><span class="hero-meta-label">MM Case</span></div>
+        <div class="hero-meta-item"><span class="hero-meta-num" data-counter="200">0</span><span class="hero-meta-label">M Water Resist.</span></div>
+      </div>
+    </div>
+    <div class="hero-image-side" id="hero-image">
+      <div class="hero-watch-wrap">
+        <div class="hero-watch-ring"></div>
+        <div class="hero-watch-ring"></div>
+        <div class="hero-watch-ring"></div>
+        <img class="hero-watch-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=700&q=90&auto=format&fit=crop" alt="AUREUM luxury timepiece" onerror="this.style.opacity=0" />
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ART -->
+<section id="art" data-sec="art" style="padding:160px 60px;background:var(--ivory)">
+  <div class="art-inner">
+    <div class="art-img-wrap reveal-left">
+      <img class="art-img" loading="lazy" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&q=90&auto=format&fit=crop" alt="Luxury watch craftsmanship" onerror="this.style.background='var(--champagne)'" />
+      <div class="art-img-overlay"></div>
+    </div>
+    <div class="art-text reveal-right">
+      <span class="section-number">01</span>
+      <span class="section-label">The Art of Precision</span>
+      <h2>Where Time<br>Becomes <em>Art.</em></h2>
+      <div class="gold-line"></div>
+      <p>Every AUREUM timepiece begins not on a factory floor, but in the mind of a master horologist. A vision of perfection, translated into form through decades of craft, knowledge, and an uncompromising obsession with detail.</p>
+      <p>In a world of mass production, we have chosen a different path &mdash; one measured not in units shipped, but in seconds kept, surfaces polished, and standards upheld.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SPECS -->
+<section id="specs" data-sec="specs" style="padding:160px 60px;background:var(--cream)">
+  <div class="specs-inner">
+    <div class="specs-header reveal">
+      <span class="section-number">02</span>
+      <span class="section-label">Engineered for Performance</span>
+      <h2>Numbers That<br><em style="font-style:italic;color:var(--silver)">Define Excellence.</em></h2>
+    </div>
+    <div class="specs-grid reveal delay-2">
+      <div class="spec-card"><span class="spec-num">01</span><span class="spec-value js-counter" data-to="72">0</span><span class="spec-unit">Hours<br>Power Reserve</span></div>
+      <div class="spec-card"><span class="spec-num">02</span><span class="spec-value js-counter" data-to="200">0</span><span class="spec-unit">Metres<br>Water Resistance</span></div>
+      <div class="spec-card"><span class="spec-num">03</span><span class="spec-value">42<small style="font-size:.5em">MM</small></span><span class="spec-unit">Case<br>Diameter</span></div>
+      <div class="spec-card"><span class="spec-num">04</span><span class="spec-value">316L</span><span class="spec-unit">Marine Grade<br>Stainless Steel</span></div>
+      <div class="spec-card"><span class="spec-num">05</span><span class="spec-value" style="font-size:2rem">AUTO</span><span class="spec-unit">Mechanical<br>Self-winding</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details" data-sec="details" style="padding:160px 60px;background:var(--ivory)">
+  <div class="details-inner">
+    <div class="details-header reveal">
+      <span class="section-number">03</span>
+      <span class="section-label">Designed Down to the Last Detail</span>
+      <h2>An Engineering<br><em style="font-style:italic">Masterpiece.</em></h2>
+    </div>
+    <div class="details-showcase">
+      <div class="detail-main-img reveal-left">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=90&auto=format&fit=crop" alt="Watch detail close-up" onerror="this.style.background='var(--champagne)'" />
+        <div class="detail-annotations">
+          <div class="annotation" style="top:15%;left:68%"><div class="annotation-dot"></div><div class="annotation-line" style="width:40px"></div><span class="annotation-text">Crown</span></div>
+          <div class="annotation" style="top:35%;left:72%"><div class="annotation-dot"></div><div class="annotation-line" style="width:30px"></div><span class="annotation-text">Bezel</span></div>
+          <div class="annotation" style="top:55%;left:12%"><span class="annotation-text">Dial</span><div class="annotation-line" style="width:30px"></div><div class="annotation-dot"></div></div>
+          <div class="annotation" style="top:76%;left:8%"><span class="annotation-text">Bracelet</span><div class="annotation-line" style="width:28px"></div><div class="annotation-dot"></div></div>
+        </div>
+      </div>
+      <div class="detail-parts reveal-right">
+        <div class="detail-part"><div class="detail-part-name">Dial</div><div class="detail-part-desc">Sunray-brushed silver dial</div><div class="detail-part-sub">Hour markers hand-applied in polished white gold, each individually aligned to sub-millimetre precision.</div></div>
+        <div class="detail-part"><div class="detail-part-name">Bezel</div><div class="detail-part-desc">Fixed ceramic bezel</div><div class="detail-part-sub">Scratch-resistant high-tech ceramic with micro-blasted finish. Virtually indestructible and colour-fast.</div></div>
+        <div class="detail-part"><div class="detail-part-name">Crown</div><div class="detail-part-desc">Screw-down triplock crown</div><div class="detail-part-sub">Triple sealing system tested to 200 metres. Precision-knurled, embossed with the AUREUM insignia.</div></div>
+        <div class="detail-part"><div class="detail-part-name">Bracelet</div><div class="detail-part-desc">Five-link Oyster bracelet</div><div class="detail-part-sub">Alternating polished and brushed 316L steel. Glidelock extension in 2mm increments, no tools needed.</div></div>
+        <div class="detail-part"><div class="detail-part-name">Crystal</div><div class="detail-part-desc">Domed sapphire crystal</div><div class="detail-part-sub">9H hardness. Dual anti-reflective coating on both inner and outer surfaces for absolute clarity.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HSCROLL -->
+<section id="hscroll" style="padding:80px 0;background:var(--ivory);overflow:hidden">
+  <div class="hscroll-track">
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=640&q=80&auto=format&fit=crop" alt="The Case" /><span class="hscroll-caption">The Case</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=640&q=80&auto=format&fit=crop" alt="The Dial" /><span class="hscroll-caption">The Dial</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1548171915-b7f57bfc32bc?w=640&q=80&auto=format&fit=crop" alt="On The Wrist" /><span class="hscroll-caption">On The Wrist</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1606744824163-985d376605ef?w=640&q=80&auto=format&fit=crop" alt="The Movement" /><span class="hscroll-caption">The Movement</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=640&q=80&auto=format&fit=crop" alt="The Crown" /><span class="hscroll-caption">The Crown</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=640&q=80&auto=format&fit=crop" alt="The Bracelet" /><span class="hscroll-caption">The Bracelet</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=640&q=80&auto=format&fit=crop" alt="The Case" /><span class="hscroll-caption">The Case</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=640&q=80&auto=format&fit=crop" alt="The Dial" /><span class="hscroll-caption">The Dial</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1548171915-b7f57bfc32bc?w=640&q=80&auto=format&fit=crop" alt="On The Wrist" /><span class="hscroll-caption">On The Wrist</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1606744824163-985d376605ef?w=640&q=80&auto=format&fit=crop" alt="The Movement" /><span class="hscroll-caption">The Movement</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=640&q=80&auto=format&fit=crop" alt="The Crown" /><span class="hscroll-caption">The Crown</span></div>
+    <div class="hscroll-item"><img loading="lazy" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=640&q=80&auto=format&fit=crop" alt="The Bracelet" /><span class="hscroll-caption">The Bracelet</span></div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section id="collection" data-sec="collection">
+  <div class="collection-inner">
+    <div class="collection-header reveal">
+      <span class="section-number">04</span>
+      <span class="section-label">The Collection</span>
+      <h2>Masterpieces<br><em style="font-style:italic;color:var(--silver)">Await You.</em></h2>
+      <p>Six singular timepieces. Each born from obsession. Each destined for the discerning few who understand that on the wrist, nothing speaks louder than absolute precision.</p>
+    </div>
+    <div id="watch-grid" class="watch-grid"></div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section id="materials" data-sec="materials" style="padding:160px 60px;background:var(--ivory)">
+  <div class="materials-inner">
+    <div class="materials-header reveal">
+      <span class="section-number">05</span>
+      <span class="section-label">Materials Without Compromise</span>
+      <h2>Only the<br><em style="font-style:italic;color:var(--silver)">Finest Will Do.</em></h2>
+    </div>
+    <div class="materials-grid">
+      <div class="material-card reveal delay-1">
+        <img class="material-img" loading="lazy" src="https://images.unsplash.com/photo-1548171915-b7f57bfc32bc?w=700&q=80&auto=format&fit=crop" alt="Sapphire crystal watch dial" onerror="this.style.background='var(--champagne)'" />
+        <div class="material-body"><span class="material-name">01 &mdash; Crystal</span><h3 class="material-title">Sapphire Crystal</h3><p class="material-desc">Exceptional clarity. Exceptional resistance. Grown synthetically to achieve the purity of natural sapphire, precision-cut and dual-coated to eliminate glare.</p></div>
+      </div>
+      <div class="material-card reveal delay-2">
+        <img class="material-img" loading="lazy" src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=700&q=80&auto=format&fit=crop" alt="Watch case steel" onerror="this.style.background='var(--champagne)'" />
+        <div class="material-body"><span class="material-name">02 &mdash; Case Material</span><h3 class="material-title">316L Stainless Steel</h3><p class="material-desc">Machined for strength, refined by hand. Marine-grade steel with exceptional corrosion resistance, mirror-polished on key surfaces, satin-brushed on others.</p></div>
+      </div>
+      <div class="material-card reveal delay-3">
+        <img class="material-img" loading="lazy" src="https://images.unsplash.com/photo-1606744824163-985d376605ef?w=700&q=80&auto=format&fit=crop" alt="Watch mechanical movement" onerror="this.style.background='var(--champagne)'" />
+        <div class="material-body"><span class="material-name">03 &mdash; Movement</span><h3 class="material-title">Precision Movement</h3><p class="material-desc">Built to keep time with uncompromising accuracy. Each component assembled by hand, regulated and certified to plus or minus 2 seconds per day.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOVEMENT -->
+<section id="movement" data-sec="movement" style="padding:160px 60px;background:var(--charcoal);overflow:hidden;position:relative">
+  <div class="movement-glow"></div>
+  <div class="movement-inner">
+    <div class="movement-text reveal-left">
+      <span class="section-number" style="color:rgba(255,255,255,.2)">06</span>
+      <span class="section-label" style="color:var(--gold-light)">The Movement</span>
+      <h2>The Heart<br>of Every<br><em>AUREUM.</em></h2>
+      <p>The Calibre A-3135 is not merely a mechanism &mdash; it is the product of thousands of hours of research, testing, and refinement. Each component machined to tolerances measured in microns.</p>
+      <p>Visible through the exhibition caseback, the rotor sweeps in silence &mdash; a constant reminder that precision is always at work.</p>
+      <div class="movement-stats">
+        <div class="mvmt-stat"><span class="mvmt-stat-val js-counter" data-to="28800">0</span><span class="mvmt-stat-lbl">Vph Frequency</span></div>
+        <div class="mvmt-stat"><span class="mvmt-stat-val js-counter" data-to="31">0</span><span class="mvmt-stat-lbl">Jewels</span></div>
+        <div class="mvmt-stat"><span class="mvmt-stat-val js-counter" data-to="72">0</span><span class="mvmt-stat-lbl">Hr Power Reserve</span></div>
+        <div class="mvmt-stat"><span class="mvmt-stat-val">+/-2s</span><span class="mvmt-stat-lbl">Daily Accuracy</span></div>
+      </div>
+    </div>
+    <div class="movement-img-wrap reveal-right">
+      <div class="m-ring"></div><div class="m-ring"></div><div class="m-ring"></div>
+      <img class="movement-watch-img" loading="lazy" src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=700&q=90&auto=format&fit=crop" alt="AUREUM movement" onerror="this.style.opacity=0" />
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section id="statement" data-sec="statement" style="padding:200px 60px;background:var(--ivory);text-align:center">
+  <div class="statement-inner">
+    <p class="statement-quote reveal">"Every second is a<br>statement. Every tick<br>a <em>testament.</em>"</p>
+    <span class="statement-attr reveal delay-2">&mdash; The AUREUM Philosophy</span>
+  </div>
+</section>
+
+<!-- DARK BAND -->
+<div class="dark-band">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=1600&q=70&auto=format&fit=crop" alt="" aria-hidden="true" />
+  <div class="band-content reveal">
+    <span class="band-eyebrow">Every Second Matters</span>
+    <h2 class="band-title">A Statement<br>on the Wrist.</h2>
+  </div>
+</div>
+
+<!-- FINAL REVEAL -->
+<section id="reveal-section" data-sec="final" style="padding:160px 60px;background:var(--cream)">
+  <div class="reveal-grid">
+    <div class="reveal-left">
+      <div class="reveal-img-frame">
+        <div class="reveal-corner tl"></div><div class="reveal-corner tr"></div>
+        <div class="reveal-corner bl"></div><div class="reveal-corner br"></div>
+        <img loading="lazy" src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=900&q=90&auto=format&fit=crop" alt="AUREUM Chronograde I" onerror="this.style.background='var(--champagne)'" />
+      </div>
+    </div>
+    <div class="reveal-text reveal-right">
+      <span class="section-number">07</span>
+      <span class="section-label">Final Product Reveal</span>
+      <h2>The AUREUM<br><em>Chronograde I.</em></h2>
+      <p>Introducing the first watch in the AUREUM Collection &mdash; a fusion of traditional Swiss-inspired horology with the sensibility of contemporary design. Built for those who refuse to compromise.</p>
+      <p>Not a timepiece. An experience. A philosophy. A declaration of intent worn on the wrist.</p>
+      <ul class="feature-list">
+        <li>Calibre A-3135 automatic movement, 28,800 vph</li>
+        <li>42mm 316L stainless steel case with satin and polish finish</li>
+        <li>Domed sapphire crystal with dual anti-reflective coating</li>
+        <li>200m water resistance with triple-lock screw-down crown</li>
+        <li>72-hour power reserve with exhibition caseback</li>
+        <li>Five-link Oyster bracelet with Glidelock extension</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <h2 class="footer-statement reveal">Time,<br><em>Mastered.</em></h2>
+    <p class="footer-tagline reveal delay-1">A study in precision, material, and motion.</p>
+    <div class="footer-bottom reveal delay-2">
+      <span class="footer-brand">AUREUM</span>
+      <ul class="footer-nav">
+        <li><a href="#art">Story</a></li>
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#materials">Materials</a></li>
+        <li><a href="#movement">Movement</a></li>
+      </ul>
+      <span class="footer-copy">&copy; 2026 AUREUM. All Rights Reserved.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div id="cart-overlay" class="cart-overlay"></div>
+<aside id="cart-sidebar" class="cart-sidebar" role="dialog" aria-label="Shopping Cart">
+  <div class="cart-header">
+    <div class="cart-title-wrap">
+      <span class="cart-title">Your Collection</span>
+      <span class="cart-title-sub">AUREUM Timepieces</span>
+    </div>
+    <button id="close-cart" class="cart-close" aria-label="Close">&#215;</button>
+  </div>
+  <div id="cart-items" class="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span id="cart-total-val">&#8377;0</span>
+    </div>
+    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<!-- AUTH MODAL -->
+<div id="auth-overlay" class="auth-overlay"></div>
+<div id="auth-modal" class="auth-modal" role="dialog" aria-label="Member Access">
+  <button id="close-auth" class="auth-close" aria-label="Close">&#215;</button>
+  <div class="auth-brand">AUREUM</div>
+  <span class="auth-brand-sub">Member Access</span>
+  <div class="auth-tabs">
+    <button class="auth-tab active" data-tab="login">Sign In</button>
+    <button class="auth-tab" data-tab="signup">Create Account</button>
+  </div>
+  <div id="login-form" class="auth-form active">
+    <div class="form-group"><label for="login-email">Email Address</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" /></div>
+    <div class="form-group"><label for="login-password">Password</label><input type="password" id="login-password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password" /></div>
+    <button class="auth-submit" id="login-btn">Sign In</button>
+    <div id="login-error" class="auth-error"></div>
+  </div>
+  <div id="signup-form" class="auth-form">
+    <div class="form-group"><label for="signup-name">Full Name</label><input type="text" id="signup-name" placeholder="Your Name" autocomplete="name" /></div>
+    <div class="form-group"><label for="signup-email">Email Address</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" /></div>
+    <div class="form-group"><label for="signup-password">Password</label><input type="password" id="signup-password" placeholder="Minimum 6 characters" autocomplete="new-password" /></div>
+    <button class="auth-submit" id="signup-btn">Create Account</button>
+    <div id="signup-error" class="auth-error"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ━━━━━━ WATCH DATA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var WATCHES = [
+    { id:1, name:"Chronograde I", tagline:"The Original Masterpiece", price:485000, collection:"Heritage",
+      img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&q=90&auto=format&fit=crop",
+      specs:{movement:"Automatic",diameter:"42MM",water:"200M",reserve:"72H"} },
+    { id:2, name:"Perpetual II", tagline:"Time Without Limits", price:785000, collection:"Complication",
+      img:"https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&h=600&q=90&auto=format&fit=crop",
+      specs:{movement:"Perpetual Calendar",diameter:"40MM",water:"100M",reserve:"96H"} },
+    { id:3, name:"Skeleton III", tagline:"Transparency Perfected", price:1250000, collection:"Artisan",
+      img:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=600&q=90&auto=format&fit=crop",
+      specs:{movement:"Manual Wind",diameter:"41MM",water:"50M",reserve:"80H"} },
+    { id:4, name:"Tourbillon IV", tagline:"Against Gravity", price:1850000, collection:"Grand Complication",
+      img:"https://images.unsplash.com/photo-1548171915-b7f57bfc32bc?w=600&h=600&q=90&auto=format&fit=crop",
+      specs:{movement:"Flying Tourbillon",diameter:"43MM",water:"30M",reserve:"120H"} },
+    { id:5, name:"Diver V", tagline:"Depth Without Compromise", price:625000, collection:"Sport",
+      img:"https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&h=600&q=90&auto=format&fit=crop&crop=entropy",
+      specs:{movement:"Automatic",diameter:"44MM",water:"300M",reserve:"72H"} },
+    { id:6, name:"GMT VI", tagline:"Two Cities, One Wrist", price:920000, collection:"Travel",
+      img:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=600&q=90&auto=format&fit=crop&crop=entropy",
+      specs:{movement:"GMT Automatic",diameter:"41MM",water:"100M",reserve:"70H"} }
+  ];
+
+  // ━━━━━━ UTILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  function fmtPrice(n){ return "\u20B9" + n.toLocaleString("en-IN"); }
+
+  function showToast(msg) {
+    var t = document.createElement("div");
+    t.className = "toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.classList.add("toast-show"); }, 12);
+    setTimeout(function(){ t.classList.remove("toast-show"); setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 400); }, 2700);
+  }
+
+  function findWatch(id){ for(var i=0;i<WATCHES.length;i++) if(WATCHES[i].id===id) return WATCHES[i]; return null; }
+
+  // ━━━━━━ CART ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var Cart = {
+    items: JSON.parse(localStorage.getItem("aureum_cart")||"[]"),
+    save: function(){ localStorage.setItem("aureum_cart",JSON.stringify(this.items)); },
+    add: function(id) {
+      var found = false;
+      for(var i=0;i<this.items.length;i++) { if(this.items[i].id===id){ this.items[i].qty++; found=true; break; } }
+      if(!found) this.items.push({id:id,qty:1});
+      this.save(); this.render(); this.badge();
+      var w=findWatch(id); showToast((w?"AUREUM "+w.name:"Timepiece")+" added to collection");
+    },
+    remove: function(id){ this.items=this.items.filter(function(x){return x.id!==id;}); this.save(); this.render(); this.badge(); },
+    setQty: function(id,qty){ if(qty<=0){this.remove(id);return;} for(var i=0;i<this.items.length;i++) if(this.items[i].id===id){this.items[i].qty=qty;break;} this.save(); this.render(); this.badge(); },
+    total: function(){ return this.items.reduce(function(s,it){ var w=findWatch(it.id); return s+(w?w.price*it.qty:0); },0); },
+    badge: function(){
+      var n=this.items.reduce(function(s,x){return s+x.qty;},0);
+      var el=document.getElementById("cart-count");
+      el.textContent=n; el.style.display=n>0?"flex":"none";
+    },
+    render: function(){
+      var c=document.getElementById("cart-items"); if(!c) return;
+      if(this.items.length===0){
+        c.innerHTML='<div class="cart-empty"><span class="cart-empty-icon">&#9676;</span><p>Your collection is empty.</p><span class="cart-empty-sub">Discover timepieces above</span></div>';
+        document.getElementById("cart-total-val").textContent="\u20B90"; return;
+      }
+      var h="";
+      for(var i=0;i<this.items.length;i++){
+        var it=this.items[i], w=findWatch(it.id); if(!w) continue;
+        h+='<div class="cart-item">'+
+          '<img class="cart-item-img" src="'+w.img+'" alt="'+w.name+'" />'+
+          '<div class="cart-item-info">'+
+            '<div class="cart-item-name">AUREUM '+w.name+'</div>'+
+            '<div class="cart-item-collection">'+w.collection+'</div>'+
+            '<div class="cart-item-price">'+fmtPrice(w.price)+'</div>'+
+            '<div class="cart-item-controls">'+
+              '<button class="qty-btn" onclick="Cart.setQty('+w.id+','+(it.qty-1)+')">&#8722;</button>'+
+              '<span class="qty-val">'+it.qty+'</span>'+
+              '<button class="qty-btn" onclick="Cart.setQty('+w.id+','+(it.qty+1)+')">+</button>'+
+              '<button class="cart-remove" onclick="Cart.remove('+w.id+')" title="Remove">&#215;</button>'+
+            '</div>'+
+          '</div>'+
+        '</div>';
+      }
+      c.innerHTML=h;
+      document.getElementById("cart-total-val").textContent=fmtPrice(this.total());
+    }
+  };
+
+  // ━━━━━━ AUTH ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var Auth = {
+    users: JSON.parse(localStorage.getItem("aureum_users")||"[]"),
+    session: JSON.parse(localStorage.getItem("aureum_session")||"null"),
+    saveUsers: function(){ localStorage.setItem("aureum_users",JSON.stringify(this.users)); },
+    saveSession: function(){ localStorage.setItem("aureum_session",JSON.stringify(this.session)); },
+    login: function(email,pw){
+      for(var i=0;i<this.users.length;i++){
+        if(this.users[i].email===email && this.users[i].password===pw){
+          this.session={email:email,name:this.users[i].name}; this.saveSession(); this.ui(); return true;
+        }
+      } return false;
+    },
+    signup: function(name,email,pw){
+      for(var i=0;i<this.users.length;i++) if(this.users[i].email===email) return false;
+      this.users.push({name:name,email:email,password:pw}); this.saveUsers();
+      this.session={email:email,name:name}; this.saveSession(); this.ui(); return true;
+    },
+    logout: function(){ this.session=null; localStorage.removeItem("aureum_session"); this.ui(); showToast("Signed out successfully"); },
+    ui: function(){
+      var btn=document.getElementById("user-btn"); if(!btn) return;
+      if(this.session){ btn.classList.add("logged-in"); btn.title="Signed in as "+this.session.name+" \u2022 Click to sign out"; }
+      else { btn.classList.remove("logged-in"); btn.title="Sign In / Create Account"; }
+    }
+  };
+
+  // ━━━━━━ RENDER COLLECTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // Confirmed watch image pool for graceful fallback
+  var IMG_POOL=[
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&q=90&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=600&h=600&q=90&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&h=600&q=90&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1548171915-b7f57bfc32bc?w=600&h=600&q=90&auto=format&fit=crop'
+  ];
+  function watchImgErr(el,fbIdx){
+    var next=IMG_POOL[fbIdx%IMG_POOL.length];
+    if(el.getAttribute('data-tried')===next){
+      el.style.background='linear-gradient(135deg,var(--champagne),var(--cream))';
+      el.style.opacity='0.5'; return;
+    }
+    el.setAttribute('data-tried',next);
+    el.onerror=function(){watchImgErr(el,fbIdx+1);};
+    el.src=next;
+  }
+
+  function renderCollection(){
+    var grid=document.getElementById("watch-grid"); if(!grid) return;
+    var h="";
+    for(var i=0;i<WATCHES.length;i++){
+      var w=WATCHES[i];
+      h+='<div class="watch-card reveal">'+
+        '<div class="watch-card-img-wrap">'+
+          '<img class="watch-card-img" src="'+w.img+'" alt="AUREUM '+w.name+'" loading="lazy" onerror="watchImgErr(this,i)" />'+
+          '<div class="watch-card-overlay"><button class="add-cart-btn" data-id="'+w.id+'">Add to Collection</button></div>'+
+        '</div>'+
+        '<div class="watch-card-body">'+
+          '<span class="watch-coll-tag">'+w.collection.toUpperCase()+'</span>'+
+          '<h3 class="watch-card-name">AUREUM '+w.name+'</h3>'+
+          '<p class="watch-card-tagline">'+w.tagline+'</p>'+
+          '<div class="watch-card-specs">'+
+            '<span class="watch-spec-chip">'+w.specs.movement+'</span>'+
+            '<span class="watch-spec-chip">'+w.specs.diameter+'</span>'+
+            '<span class="watch-spec-chip">'+w.specs.water+'</span>'+
+          '</div>'+
+          '<div class="watch-card-footer">'+
+            '<span class="watch-card-price">'+fmtPrice(w.price)+'</span>'+
+            '<button class="add-cart-btn-sm" data-id="'+w.id+'" title="Add to Collection">+</button>'+
+          '</div>'+
+        '</div>'+
+      '</div>';
+    }
+    grid.innerHTML=h;
+    grid.querySelectorAll(".add-cart-btn,.add-cart-btn-sm").forEach(function(btn){
+      btn.addEventListener("click",function(){ Cart.add(parseInt(btn.dataset.id)); });
+    });
+    grid.querySelectorAll(".watch-card.reveal").forEach(function(el){ io.observe(el); });
+  }
+
+  // ━━━━━━ CART PANEL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  function openCart(){ document.getElementById("cart-sidebar").classList.add("open"); document.getElementById("cart-overlay").classList.add("show"); }
+  function closeCart(){ document.getElementById("cart-sidebar").classList.remove("open"); document.getElementById("cart-overlay").classList.remove("show"); }
+
+  // ━━━━━━ AUTH MODAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  function openAuth(){ document.getElementById("auth-modal").classList.add("open"); document.getElementById("auth-overlay").classList.add("show"); document.getElementById("login-error").textContent=""; document.getElementById("signup-error").textContent=""; }
+  function closeAuth(){ document.getElementById("auth-modal").classList.remove("open"); document.getElementById("auth-overlay").classList.remove("show"); }
+
+  // ━━━━━━ EVENTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  document.getElementById("cart-btn").addEventListener("click", openCart);
+  document.getElementById("close-cart").addEventListener("click", closeCart);
+  document.getElementById("cart-overlay").addEventListener("click", closeCart);
+
+  document.getElementById("user-btn").addEventListener("click", function(){
+    if(Auth.session) Auth.logout(); else openAuth();
+  });
+  document.getElementById("close-auth").addEventListener("click", closeAuth);
+  document.getElementById("auth-overlay").addEventListener("click", closeAuth);
+
+  document.getElementById("checkout-btn").addEventListener("click", function(){
+    if(Cart.items.length===0){ showToast("Your collection is empty"); return; }
+    if(!Auth.session){ closeCart(); openAuth(); showToast("Please sign in to checkout"); return; }
+    showToast("Order placed! Our concierge will contact you."); Cart.items=[]; Cart.save(); Cart.render(); Cart.badge(); closeCart();
+  });
+
+  // Auth tabs
+  document.querySelectorAll(".auth-tab").forEach(function(tab){
+    tab.addEventListener("click", function(){
+      document.querySelectorAll(".auth-tab,.auth-form").forEach(function(el){ el.classList.remove("active"); });
+      tab.classList.add("active"); document.getElementById(tab.dataset.tab+"-form").classList.add("active");
+    });
+  });
+
+  // Login
+  document.getElementById("login-btn").addEventListener("click", function(){
+    var email=document.getElementById("login-email").value.trim();
+    var pw=document.getElementById("login-password").value;
+    var err=document.getElementById("login-error"); err.textContent="";
+    if(!email||!pw){ err.textContent="Please fill in all fields."; return; }
+    if(Auth.login(email,pw)){ closeAuth(); showToast("Welcome back, "+Auth.session.name); }
+    else err.textContent="Invalid email or password.";
+  });
+
+  // Signup
+  document.getElementById("signup-btn").addEventListener("click", function(){
+    var name=document.getElementById("signup-name").value.trim();
+    var email=document.getElementById("signup-email").value.trim();
+    var pw=document.getElementById("signup-password").value;
+    var err=document.getElementById("signup-error"); err.textContent="";
+    if(!name||!email||!pw){ err.textContent="Please fill in all fields."; return; }
+    if(pw.length<6){ err.textContent="Password must be at least 6 characters."; return; }
+    if(Auth.signup(name,email,pw)){ closeAuth(); showToast("Welcome to AUREUM, "+name); }
+    else err.textContent="An account with this email already exists.";
+  });
+
+  // Enter key support
+  ["login-email","login-password"].forEach(function(id){
+    document.getElementById(id).addEventListener("keydown",function(e){ if(e.key==="Enter") document.getElementById("login-btn").click(); });
+  });
+  ["signup-name","signup-email","signup-password"].forEach(function(id){
+    document.getElementById(id).addEventListener("keydown",function(e){ if(e.key==="Enter") document.getElementById("signup-btn").click(); });
+  });
+
+  // ━━━━━━ CURSOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var dot=document.getElementById("cursor-dot"), ring=document.getElementById("cursor-ring");
+  var mx=0,my=0,rx=0,ry=0;
+  document.addEventListener("mousemove",function(e){ mx=e.clientX; my=e.clientY; dot.style.left=mx+"px"; dot.style.top=my+"px"; });
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  (function animC(){ rx=lerp(rx,mx,.12); ry=lerp(ry,my,.12); ring.style.left=rx+"px"; ring.style.top=ry+"px"; requestAnimationFrame(animC); })();
+  document.querySelectorAll("a,button,.spec-card,.material-card,.watch-card").forEach(function(el){
+    el.addEventListener("mouseenter",function(){ ring.style.width="52px"; ring.style.height="52px"; ring.style.borderColor="rgba(201,169,110,.5)"; dot.style.width="3px"; dot.style.height="3px"; });
+    el.addEventListener("mouseleave",function(){ ring.style.width="32px"; ring.style.height="32px"; ring.style.borderColor="rgba(26,24,20,.35)"; dot.style.width="6px"; dot.style.height="6px"; });
+  });
+
+  // ━━━━━━ SCROLL PROGRESS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var prog=document.getElementById("scroll-progress");
+  window.addEventListener("scroll",function(){ var s=document.documentElement; prog.style.width=(s.scrollTop/(s.scrollHeight-s.clientHeight)*100)+"%"; },{passive:true});
+
+  // ━━━━━━ NAV ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var nav=document.getElementById("main-nav");
+  window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>60); },{passive:true});
+
+  // ━━━━━━ COUNTER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  function animCounter(el,from,to,ms){
+    var start=performance.now();
+    (function step(ts){ var p=Math.min((ts-start)/ms,1),e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(from+(to-from)*e).toLocaleString();
+      if(p<1) requestAnimationFrame(step); else el.textContent=to.toLocaleString();
+    })(performance.now());
+  }
+
+  // ━━━━━━ HERO ENTRANCE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  window.addEventListener("load",function(){
+    var ht=document.getElementById("hero-text"), hi=document.getElementById("hero-image");
+    setTimeout(function(){ ht.style.transition="opacity 1.1s cubic-bezier(.25,.8,.25,1),transform 1.1s cubic-bezier(.25,.8,.25,1)"; ht.style.opacity="1"; ht.style.transform="translateX(0)"; },200);
+    setTimeout(function(){ hi.style.transition="opacity 1.2s cubic-bezier(.25,.8,.25,1),transform 1.2s cubic-bezier(.25,.8,.25,1)"; hi.style.opacity="1"; hi.style.transform="scale(1) translateY(0)"; },500);
+    document.querySelectorAll("[data-counter]").forEach(function(el){ animCounter(el,0,parseInt(el.dataset.counter),1800); });
+  });
+
+  // ━━━━━━ INTERSECTION OBSERVER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add("visible"); io.unobserve(e.target);
+      e.target.querySelectorAll(".js-counter").forEach(function(c){ if(!c.dataset.done){ c.dataset.done="1"; animCounter(c,0,parseInt(c.dataset.to),2200); } });
+    });
+  },{threshold:0.1});
+  document.querySelectorAll(".reveal,.reveal-left,.reveal-right").forEach(function(el){ io.observe(el); });
+
+  // ━━━━━━ SECTION INDICATOR ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var secIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(!e.isIntersecting) return; var id=e.target.dataset.sec; document.querySelectorAll(".sec-dot").forEach(function(d){ d.classList.toggle("active",d.dataset.sec===id); }); });
+  },{threshold:0.4});
+  document.querySelectorAll("section[data-sec]").forEach(function(s){ secIO.observe(s); });
+
+  // ━━━━━━ PARALLAX ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  var glow=document.querySelector(".hero-bg-glow");
+  window.addEventListener("scroll",function(){ if(glow) glow.style.transform="translate(-50%,calc(-50%+"+(window.scrollY*.08)+"px))"; },{passive:true});
+
+  // ━━━━━━ INIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  renderCollection();
+  Cart.render(); Cart.badge(); Auth.ui();
+})();
+</script>
+</body>
+</html>

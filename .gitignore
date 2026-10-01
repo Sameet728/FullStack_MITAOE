@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Temporary scripts & scratch files
+temp_*
+*.log
+scratchpad*
+test_*
+*.py
+
+# Root temp images & MS Word locks
+*.png
+~$*
+
+# IDE & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/
