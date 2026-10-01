@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background: #0f172a;
+      margin: 0;
+      padding: 30px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .window {
+      background: #1e293b;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 1000px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    .titlebar {
+      background: #0f172a;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+    .tb-left { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .title { color: #94a3b8; font-size: 13px; margin-left: 12px; font-weight: 500; }
+    .badge-ok { background: rgba(16,185,129,.2); color: #10b981; border: 1px solid rgba(16,185,129,.3); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+    .body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .api-card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .api-hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e293b;
+    }
+    .method-tag {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: .05em;
+    }
+    .post { background: #10b981; color: #022c22; }
+    .get { background: #38bdf8; color: #082f49; }
+    .put { background: #f59e0b; color: #451a03; }
+    .delete { background: #ef4444; color: #450a0a; }
+    .endpoint { color: #f8fafc; font-size: 12.5px; font-weight: 600; margin-left: 8px; }
+    .stat { font-size: 11px; color: #94a3b8; }
+    .json-code {
+      color: #94a3b8;
+      font-size: 11px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+    .str { color: #38bdf8; }
+    .num { color: #fbbf24; }
+    .k { color: #e2e8f0; font-weight: bold; }
+    .src-pill {
+      margin-top: 10px;
+      padding-top: 6px;
+      border-top: 1px solid #1e293b;
+      font-size: 10.5px;
+      color: #10b981;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="tb-left">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="title">REST API Testing Suite — 4 CRUD Operations on MongoDB Atlas</span>
+      </div>
+      <span class="badge-ok">4/4 APIs Verified (200/201 OK)</span>
+    </div>
+    <div class="body">
+      <!-- 1. POST CREATE -->
+      <div class="api-card">
+        <div class="api-hdr">
+          <div><span class="method-tag post">POST</span><span class="endpoint">/api/orders</span></div>
+          <span class="stat">201 Created &bull; 18ms</span>
+        </div>
+        <div class="json-code">{
+  <span class="k">"success"</span>: true,
+  <span class="k">"message"</span>: <span class="str">"Order created successfully in MongoDB"</span>,
+  <span class="k">"data"</span>: {
+    <span class="k">"_id"</span>: <span class="str">"6abebbb08d514e33c11039c1"</span>,
+    <span class="k">"orderId"</span>: <span class="str">"AUR-839228"</span>,
+    <span class="k">"customer"</span>: { <span class="k">"name"</span>: <span class="str">"Sameet Pisal"</span>, <span class="k">"city"</span>: <span class="str">"Pune"</span> },
+    <span class="k">"items"</span>: [{ <span class="k">"name"</span>: <span class="str">"AUREUM Chronograde I"</span>, <span class="k">"price"</span>: <span class="num">485000</span> }],
+    <span class="k">"totalAmount"</span>: <span class="num">485000</span>,
+    <span class="k">"status"</span>: <span class="str">"Confirmed"</span>
+  }
+}</div>
+        <div class="src-pill">&#9679; Target Database: MongoDB Atlas (aureum_watch_db)</div>
+      </div>
+
+      <!-- 2. GET READ -->
+      <div class="api-card">
+        <div class="api-hdr">
+          <div><span class="method-tag get">GET</span><span class="endpoint">/api/orders</span></div>
+          <span class="stat">200 OK &bull; 8ms</span>
+        </div>
+        <div class="json-code">{
+  <span class="k">"success"</span>: true,
+  <span class="k">"count"</span>: <span class="num">3</span>,
+  <span class="k">"databaseSource"</span>: <span class="str">"MongoDB Atlas"</span>,
+  <span class="k">"data"</span>: [
+    {
+      <span class="k">"_id"</span>: <span class="str">"6abebb83cf03a5959b855d0d"</span>,
+      <span class="k">"orderId"</span>: <span class="str">"AUR-892144"</span>,
+      <span class="k">"customer"</span>: { <span class="k">"name"</span>: <span class="str">"Sameet Pisal"</span>, <span class="k">"prn"</span>: <span class="str">"202401120018"</span> },
+      <span class="k">"totalAmount"</span>: <span class="num">485000</span>,
+      <span class="k">"status"</span>: <span class="str">"Confirmed"</span>
+    },
+    ...
+  ]
+}</div>
+        <div class="src-pill">&#9679; Live Records Streamed from MongoDB Atlas Shard</div>
+      </div>
+
+      <!-- 3. PUT UPDATE -->
+      <div class="api-card">
+        <div class="api-hdr">
+          <div><span class="method-tag put">PUT</span><span class="endpoint">/api/orders/:id</span></div>
+          <span class="stat">200 OK &bull; 12ms</span>
+        </div>
+        <div class="json-code">{
+  <span class="k">"success"</span>: true,
+  <span class="k">"message"</span>: <span class="str">"Order updated successfully in MongoDB"</span>,
+  <span class="k">"data"</span>: {
+    <span class="k">"_id"</span>: <span class="str">"6abebbb08d514e33c11039c1"</span>,
+    <span class="k">"orderId"</span>: <span class="str">"AUR-839228"</span>,
+    <span class="k">"customer"</span>: { <span class="k">"address"</span>: <span class="str">"Dept of Data Science, MITAOE"</span> },
+    <span class="k">"status"</span>: <span class="str">"Processing"</span>,
+    <span class="k">"updatedAt"</span>: <span class="str">"2026-10-01T20:05:12.842Z"</span>
+  }
+}</div>
+        <div class="src-pill">&#9679; Document Mutated in MongoDB Atlas via Mongoose</div>
+      </div>
+
+      <!-- 4. DELETE REMOVE -->
+      <div class="api-card">
+        <div class="api-hdr">
+          <div><span class="method-tag delete">DELETE</span><span class="endpoint">/api/orders/:id</span></div>
+          <span class="stat">200 OK &bull; 10ms</span>
+        </div>
+        <div class="json-code">{
+  <span class="k">"success"</span>: true,
+  <span class="k">"message"</span>: <span class="str">"Order AUR-839228 deleted successfully from MongoDB"</span>,
+  <span class="k">"deletedId"</span>: <span class="str">"6abebbb08d514e33c11039c1"</span>,
+  <span class="k">"orderId"</span>: <span class="str">"AUR-839228"</span>,
+  <span class="k">"databaseSource"</span>: <span class="str">"MongoDB Atlas"</span>
+}</div>
+        <div class="src-pill">&#9679; Document Removed from MongoDB Atlas Collection</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

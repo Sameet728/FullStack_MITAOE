@@ -309,6 +309,67 @@
     .auth-submit:hover{background:var(--charcoal-mid)}
     .auth-error{font-size:.72rem;color:#b03030;margin-top:10px;text-align:center;min-height:18px;letter-spacing:.04em}
 
+    /* ORDERS VAULT & CHECKOUT MODALS */
+    .orders-overlay, .checkout-overlay{position:fixed;inset:0;z-index:1300;background:rgba(26,24,20,.75);opacity:0;pointer-events:none;transition:opacity .4s;backdrop-filter:blur(8px)}
+    .orders-overlay.show, .checkout-overlay.show{opacity:1;pointer-events:all}
+    .orders-modal, .checkout-modal{position:fixed;top:50%;left:50%;z-index:1400;transform:translate(-50%,-50%) scale(.95);background:var(--ivory);opacity:0;pointer-events:none;transition:all .42s cubic-bezier(.25,.8,.25,1);box-shadow:0 30px 80px rgba(0,0,0,.35);border:1px solid var(--border)}
+    .orders-modal.open, .checkout-modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
+    
+    .checkout-modal{width:560px;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;padding:36px 40px}
+    .orders-modal{width:860px;max-width:95vw;max-height:90vh;display:flex;flex-direction:column;padding:36px 40px}
+    
+    .modal-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+    .modal-hdr-left{}
+    .modal-title{font-family:"Cormorant Garamond",serif;font-size:1.6rem;letter-spacing:.2em;color:var(--charcoal);margin:0;font-weight:400}
+    .modal-sub{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-top:4px}
+    .db-badge{display:inline-flex;align-items:center;gap:6px;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:#059669;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);padding:3px 10px;border-radius:20px;margin-top:8px}
+    .db-dot{width:6px;height:6px;border-radius:50%;background:#10b981;animation:pulse-dot 2s infinite}
+    
+    .modal-close{background:none;border:1px solid var(--border);width:32px;height:32px;border-radius:50%;font-size:.9rem;color:var(--silver);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .modal-close:hover{border-color:var(--charcoal);color:var(--charcoal)}
+    
+    .modal-body{flex:1;overflow-y:auto;padding-right:8px}
+    
+    /* Orders Vault Specific */
+    .vault-toolbar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .vault-search{flex:1;min-width:200px;padding:10px 14px;background:var(--cream);border:1px solid var(--border);font-family:"Inter",sans-serif;font-size:.82rem;outline:none;transition:border-color .3s}
+    .vault-search:focus{border-color:var(--gold)}
+    .status-filters{display:flex;gap:6px;flex-wrap:wrap}
+    .status-pill{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:6px 12px;background:none;border:1px solid var(--border);cursor:pointer;transition:all .25s;color:var(--charcoal-light)}
+    .status-pill.active{background:var(--charcoal);color:var(--ivory);border-color:var(--charcoal)}
+    
+    .orders-grid{display:flex;flex-direction:column;gap:16px}
+    .order-card{background:var(--cream);border:1px solid var(--border);padding:20px 24px;transition:all .3s}
+    .order-card:hover{border-color:var(--gold);box-shadow:0 8px 24px rgba(201,169,110,.08)}
+    .order-card-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(180,165,140,.2);flex-wrap:wrap;gap:8px}
+    .order-id{font-family:"Cormorant Garamond",serif;font-size:1.15rem;letter-spacing:.12em;color:var(--charcoal);font-weight:600}
+    .order-date{font-size:.65rem;color:var(--silver);letter-spacing:.08em;margin-left:12px}
+    .order-status-badge{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:3px 10px;font-weight:600}
+    .status-Confirmed{background:rgba(16,185,129,.12);color:#059669;border:1px solid rgba(16,185,129,.3)}
+    .status-Processing{background:rgba(245,158,11,.12);color:#d97706;border:1px solid rgba(245,158,11,.3)}
+    .status-Delivered{background:rgba(6,182,212,.12);color:#0891b2;border:1px solid rgba(6,182,212,.3)}
+    .status-Cancelled{background:rgba(239,68,68,.12);color:#dc2626;border:1px solid rgba(239,68,68,.3)}
+    
+    .order-cust-info{font-size:.78rem;color:var(--charcoal-light);line-height:1.5;margin-bottom:14px}
+    .order-cust-info strong{color:var(--charcoal);font-weight:500}
+    .order-items-row{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+    .order-item-chip{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;padding:6px 0;border-bottom:1px dashed rgba(180,165,140,.25)}
+    .order-item-left{display:flex;align-items:center;gap:12px}
+    .order-item-thumb{width:36px;height:36px;object-fit:cover;border:1px solid var(--border)}
+    
+    .order-card-ftr{display:flex;justify-content:space-between;align-items:center;padding-top:12px;margin-top:6px;border-top:1px solid rgba(180,165,140,.2);flex-wrap:wrap;gap:10px}
+    .order-val{font-family:"Cormorant Garamond",serif;font-size:1.35rem;color:var(--charcoal);font-weight:400}
+    .order-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .btn-order-action{background:none;border:1px solid var(--border-strong);padding:6px 12px;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .25s;color:var(--charcoal)}
+    .btn-order-action:hover{background:var(--charcoal);color:var(--ivory)}
+    .btn-order-delete{border-color:rgba(239,68,68,.3);color:#dc2626}
+    .btn-order-delete:hover{background:#dc2626;color:#ffffff;border-color:#dc2626}
+    
+    /* Checkout Specific */
+    .checkout-summary-box{background:var(--cream);border:1px solid var(--border);padding:14px 18px;margin-bottom:18px}
+    .checkout-sum-row{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;padding:4px 0}
+    .checkout-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
     /* TOAST */
     .toast{position:fixed;bottom:44px;left:50%;transform:translateX(-50%) translateY(16px);z-index:9000;background:var(--charcoal);color:#f0ece4;padding:13px 26px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;opacity:0;transition:all .38s ease;pointer-events:none;white-space:nowrap;border-left:2px solid var(--gold);font-family:"Inter",sans-serif}
     .toast.toast-show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -362,9 +423,14 @@
     <li><a href="#collection">Collection</a></li>
     <li><a href="#details">Craftsmanship</a></li>
     <li><a href="#movement">Movement</a></li>
+    <li><a href="#orders" id="nav-orders-link">Orders Vault</a></li>
   </ul>
   <div class="nav-right">
     <a href="#collection" class="nav-cta">Shop &#8595;</a>
+    <button id="orders-btn" class="nav-icon-btn" aria-label="Orders Vault" title="My Orders & MongoDB Vault">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span id="orders-count" class="cart-badge">0</span>
+    </button>
     <button id="user-btn" class="nav-icon-btn" aria-label="Account" title="Sign In">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </button>
@@ -657,6 +723,80 @@
   </div>
 </div>
 
+<!-- CHECKOUT MODAL (Create Order / POST /api/orders) -->
+<div id="checkout-overlay" class="checkout-overlay"></div>
+<div id="checkout-modal" class="checkout-modal" role="dialog" aria-label="AUREUM Concierge Checkout">
+  <div class="modal-hdr">
+    <div class="modal-hdr-left">
+      <h3 class="modal-title">AUREUM Concierge</h3>
+      <span class="modal-sub">Acquisition & Order Placement (POST /api/orders)</span>
+      <div class="db-badge"><span class="db-dot"></span> MongoDB Atlas: Connected</div>
+    </div>
+    <button id="close-checkout" class="modal-close" aria-label="Close">&#215;</button>
+  </div>
+  <div class="modal-body">
+    <div class="checkout-summary-box">
+      <div id="checkout-items-preview"></div>
+      <div class="checkout-sum-row" style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px;font-weight:600;">
+        <span>Total Investment:</span>
+        <span id="checkout-total-val">&#8377;0</span>
+      </div>
+    </div>
+    <form id="checkout-form">
+      <div class="checkout-form-grid">
+        <div class="form-group"><label>Client Full Name *</label><input type="text" id="chk-name" required placeholder="Sameet Pisal" /></div>
+        <div class="form-group"><label>Email Address *</label><input type="email" id="chk-email" required placeholder="sameet.pisal@mitaoe.ac.in" /></div>
+      </div>
+      <div class="checkout-form-grid">
+        <div class="form-group"><label>Phone Number *</label><input type="tel" id="chk-phone" required placeholder="+91 98765 43210" /></div>
+        <div class="form-group"><label>City / Pincode *</label><input type="text" id="chk-city" required placeholder="Pune, 412105" /></div>
+      </div>
+      <div class="form-group"><label>White Glove Delivery Address *</label><input type="text" id="chk-address" required placeholder="Department of Data Science, MITAOE Campus, Alandi Road" /></div>
+      <div class="form-group"><label>Delivery Notes</label><input type="text" id="chk-notes" placeholder="Hand deliver with velvet box and certificate of authenticity" /></div>
+      <div class="form-group">
+        <label>Payment & Settlement Channel</label>
+        <select id="chk-payment" style="width:100%;padding:12px 16px;border:1px solid var(--border);background:var(--cream);color:var(--charcoal);font-family:'Inter',sans-serif;font-size:.88rem;outline:none;">
+          <option value="UPI">UPI Instant Concierge Transfer</option>
+          <option value="Card">Ultra-High Net Worth Credit Card</option>
+          <option value="NetBanking">Private Client NetBanking</option>
+          <option value="Concierge Cash">White Glove Vault Cash on Delivery</option>
+        </select>
+      </div>
+      <button type="submit" id="btn-submit-order" class="auth-submit" style="background:var(--gold);color:var(--charcoal);font-weight:600;margin-top:8px;">Confirm Order & Save to MongoDB Atlas</button>
+      <div id="checkout-error" class="auth-error"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ORDERS VAULT MODAL (Read, Update, Delete / GET, PUT, DELETE /api/orders) -->
+<div id="orders-overlay" class="orders-overlay"></div>
+<div id="orders-modal" class="orders-modal" role="dialog" aria-label="AUREUM Orders Vault">
+  <div class="modal-hdr">
+    <div class="modal-hdr-left">
+      <h3 class="modal-title">AUREUM Orders Vault</h3>
+      <span class="modal-sub">Real-Time MongoDB Atlas CRUD Management</span>
+      <div class="db-badge"><span class="db-dot"></span> Database Cluster: MongoDB Atlas (aureum_watch_db)</div>
+    </div>
+    <button id="close-orders" class="modal-close" aria-label="Close">&#215;</button>
+  </div>
+  <div class="modal-body">
+    <div class="vault-toolbar">
+      <input type="text" id="orders-search" class="vault-search" placeholder="Search by Order ID, Client, or Timepiece..." />
+      <div class="status-filters">
+        <button class="status-pill active" data-filter="All">All</button>
+        <button class="status-pill" data-filter="Confirmed">Confirmed</button>
+        <button class="status-pill" data-filter="Processing">Processing</button>
+        <button class="status-pill" data-filter="Delivered">Delivered</button>
+        <button class="status-pill" data-filter="Cancelled">Cancelled</button>
+      </div>
+      <button id="btn-refresh-orders" class="btn-order-action" style="padding:8px 16px;" title="Fetch fresh records from MongoDB">↻ Refresh</button>
+    </div>
+    <div id="orders-list" class="orders-grid">
+      <!-- Injected dynamically via GET /api/orders -->
+    </div>
+  </div>
+</div>
+
 <script>
 (function() {
   // ━━━━━━ WATCH DATA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -839,11 +979,290 @@
   document.getElementById("close-auth").addEventListener("click", closeAuth);
   document.getElementById("auth-overlay").addEventListener("click", closeAuth);
 
+  // ━━━━━━ ORDERS VAULT & CHECKOUT CONTROLLERS ━━━━━━━━━━━━━━━━
+  var Checkout = {
+    open: function(){
+      if(Cart.items.length === 0){ showToast("Your collection is empty"); return; }
+      closeCart();
+      var preview = document.getElementById("checkout-items-preview");
+      var html = "";
+      for(var i=0; i<Cart.items.length; i++){
+        var it = Cart.items[i];
+        html += '<div class="checkout-sum-row"><span>' + it.name + ' (x' + it.qty + ')</span><span>' + fmtPrice(it.price * it.qty) + '</span></div>';
+      }
+      preview.innerHTML = html;
+      document.getElementById("checkout-total-val").textContent = fmtPrice(Cart.total());
+      
+      // Preload user data if signed in
+      if(Auth.session){
+        document.getElementById("chk-name").value = Auth.session.name || "Sameet Pisal";
+        document.getElementById("chk-email").value = Auth.session.email || "sameet.pisal@mitaoe.ac.in";
+      } else {
+        if(!document.getElementById("chk-name").value) document.getElementById("chk-name").value = "Sameet Pisal";
+        if(!document.getElementById("chk-email").value) document.getElementById("chk-email").value = "sameet.pisal@mitaoe.ac.in";
+      }
+      
+      document.getElementById("checkout-modal").classList.add("open");
+      document.getElementById("checkout-overlay").classList.add("show");
+    },
+    close: function(){
+      document.getElementById("checkout-modal").classList.remove("open");
+      document.getElementById("checkout-overlay").classList.remove("show");
+    }
+  };
+
+  var OrderVault = {
+    orders: [],
+    activeFilter: 'All',
+    searchTerm: '',
+    open: function(){
+      document.getElementById("orders-modal").classList.add("open");
+      document.getElementById("orders-overlay").classList.add("show");
+      OrderVault.loadOrders();
+    },
+    close: function(){
+      document.getElementById("orders-modal").classList.remove("open");
+      document.getElementById("orders-overlay").classList.remove("show");
+    },
+    loadOrders: function(){
+      fetch('/api/orders')
+        .then(function(res){ return res.json(); })
+        .then(function(res){
+          if(res.success && Array.isArray(res.data)){
+            OrderVault.orders = res.data;
+            OrderVault.render();
+            OrderVault.updateBadge();
+          }
+        })
+        .catch(function(err){
+          console.error("Failed to load orders from MongoDB:", err);
+        });
+    },
+    updateBadge: function(){
+      var b = document.getElementById("orders-count");
+      if(b){
+        b.textContent = OrderVault.orders.length;
+        b.style.display = OrderVault.orders.length > 0 ? "flex" : "none";
+      }
+    },
+    render: function(){
+      var list = document.getElementById("orders-list");
+      if(!list) return;
+      var q = OrderVault.searchTerm.toLowerCase();
+      var filtered = OrderVault.orders.filter(function(o){
+        var matchFilter = OrderVault.activeFilter === 'All' || (o.status && o.status.toLowerCase() === OrderVault.activeFilter.toLowerCase());
+        var matchSearch = !q || (o.orderId && o.orderId.toLowerCase().includes(q)) || (o.customer && o.customer.name && o.customer.name.toLowerCase().includes(q)) || (o.items && o.items.some(function(it){ return it.name && it.name.toLowerCase().includes(q); }));
+        return matchFilter && matchSearch;
+      });
+
+      if(filtered.length === 0){
+        list.innerHTML = '<div style="text-align:center;padding:48px 0;color:var(--silver);font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;">No acquisitions found matching filter criteria in MongoDB Atlas.</div>';
+        return;
+      }
+
+      var h = "";
+      for(var i=0; i<filtered.length; i++){
+        var ord = filtered[i];
+        var d = new Date(ord.createdAt || Date.now()).toLocaleDateString("en-IN", { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+        var itemsHtml = "";
+        if(ord.items && ord.items.length){
+          for(var j=0; j<ord.items.length; j++){
+            var it = ord.items[j];
+            itemsHtml += '<div class="order-item-chip">' +
+              '<div class="order-item-left">' +
+                (it.img ? '<img class="order-item-thumb" src="' + it.img + '" alt="' + it.name + '">' : '') +
+                '<div><strong>' + it.name + '</strong> <span style="color:var(--silver);font-size:.72rem;">(' + (it.collectionName||'Collection') + ')</span> &bull; Qty: ' + it.quantity + '</div>' +
+              '</div>' +
+              '<div>' + fmtPrice(it.price * it.quantity) + '</div>' +
+            '</div>';
+          }
+        }
+
+        h += '<div class="order-card" data-id="' + ord.orderId + '">' +
+          '<div class="order-card-hdr">' +
+            '<div>' +
+              '<span class="order-id">' + ord.orderId + '</span>' +
+              '<span class="order-date">' + d + '</span>' +
+            '</div>' +
+            '<span class="order-status-badge status-' + ord.status + '">' + ord.status + '</span>' +
+          '</div>' +
+          '<div class="order-cust-info">' +
+            '<strong>Client:</strong> ' + (ord.customer ? ord.customer.name : 'VIP') + ' &bull; <strong>Contact:</strong> ' + (ord.customer ? ord.customer.phone : '') + '<br>' +
+            '<strong>White Glove Delivery:</strong> ' + (ord.customer ? ord.customer.address + ', ' + ord.customer.city : '') + '<br>' +
+            '<strong>Settlement:</strong> ' + ord.paymentMethod + ' (' + ord.paymentStatus + ') &bull; <em>' + (ord.notes||'') + '</em>' +
+          '</div>' +
+          '<div class="order-items-row">' + itemsHtml + '</div>' +
+          '<div class="order-card-ftr">' +
+            '<div class="order-val">' + fmtPrice(ord.totalAmount) + '</div>' +
+            '<div class="order-actions">' +
+              '<button class="btn-order-action btn-edit-addr" data-id="' + ord.orderId + '" data-addr="' + (ord.customer?ord.customer.address:'') + '">Edit Address</button>' +
+              '<button class="btn-order-action btn-advance-status" data-id="' + ord.orderId + '" data-status="' + ord.status + '">Advance Status</button>' +
+              '<button class="btn-order-action btn-order-delete" data-id="' + ord.orderId + '">Cancel / Delete</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }
+      list.innerHTML = h;
+
+      // Attach card button handlers
+      list.querySelectorAll(".btn-edit-addr").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var id = btn.dataset.id;
+          var cur = btn.dataset.addr;
+          var next = prompt("Enter updated shipping address for " + id + ":", cur);
+          if(next && next.trim() && next !== cur){
+            fetch('/api/orders/' + id, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ customer: { address: next.trim() } })
+            })
+            .then(function(r){ return r.json(); })
+            .then(function(res){
+              if(res.success){
+                showToast("Order " + id + " address updated in MongoDB Atlas");
+                OrderVault.loadOrders();
+              } else {
+                showToast("Error updating address: " + res.error);
+              }
+            });
+          }
+        });
+      });
+
+      list.querySelectorAll(".btn-advance-status").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var id = btn.dataset.id;
+          var cur = btn.dataset.status;
+          var flow = { 'Confirmed': 'Processing', 'Processing': 'Delivered', 'Delivered': 'Confirmed', 'Cancelled': 'Confirmed' };
+          var next = flow[cur] || 'Confirmed';
+          fetch('/api/orders/' + id, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: next })
+          })
+          .then(function(r){ return r.json(); })
+          .then(function(res){
+            if(res.success){
+              showToast("Order " + id + " transitioned to " + next + " in MongoDB");
+              OrderVault.loadOrders();
+            }
+          });
+        });
+      });
+
+      list.querySelectorAll(".btn-order-delete").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var id = btn.dataset.id;
+          if(confirm("Are you sure you want to cancel and delete order " + id + " from MongoDB Atlas?")){
+            fetch('/api/orders/' + id, { method: 'DELETE' })
+              .then(function(r){ return r.json(); })
+              .then(function(res){
+                if(res.success){
+                  showToast("Order " + id + " deleted from MongoDB Atlas");
+                  OrderVault.loadOrders();
+                } else {
+                  showToast("Error: " + res.error);
+                }
+              });
+          }
+        });
+      });
+    }
+  };
+
+  // Wire up Checkout and Orders Vault Events
   document.getElementById("checkout-btn").addEventListener("click", function(){
-    if(Cart.items.length===0){ showToast("Your collection is empty"); return; }
-    if(!Auth.session){ closeCart(); openAuth(); showToast("Please sign in to checkout"); return; }
-    showToast("Order placed! Our concierge will contact you."); Cart.items=[]; Cart.save(); Cart.render(); Cart.badge(); closeCart();
+    Checkout.open();
   });
+  document.getElementById("close-checkout").addEventListener("click", Checkout.close);
+  document.getElementById("checkout-overlay").addEventListener("click", Checkout.close);
+
+  document.getElementById("orders-btn").addEventListener("click", OrderVault.open);
+  var navOrdersLink = document.getElementById("nav-orders-link");
+  if(navOrdersLink) navOrdersLink.addEventListener("click", function(e){ e.preventDefault(); OrderVault.open(); });
+  document.getElementById("close-orders").addEventListener("click", OrderVault.close);
+  document.getElementById("orders-overlay").addEventListener("click", OrderVault.close);
+  document.getElementById("btn-refresh-orders").addEventListener("click", OrderVault.loadOrders);
+
+  // Search and status filter pills
+  document.getElementById("orders-search").addEventListener("input", function(e){
+    OrderVault.searchTerm = e.target.value;
+    OrderVault.render();
+  });
+  document.querySelectorAll(".status-pill").forEach(function(pill){
+    pill.addEventListener("click", function(){
+      document.querySelectorAll(".status-pill").forEach(function(p){ p.classList.remove("active"); });
+      pill.classList.add("active");
+      OrderVault.activeFilter = pill.dataset.filter;
+      OrderVault.render();
+    });
+  });
+
+  // Handle Checkout Form Submission (POST /api/orders)
+  document.getElementById("checkout-form").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(Cart.items.length === 0){ showToast("Your collection is empty"); return; }
+    
+    var customer = {
+      name: document.getElementById("chk-name").value.trim(),
+      email: document.getElementById("chk-email").value.trim(),
+      phone: document.getElementById("chk-phone").value.trim(),
+      city: document.getElementById("chk-city").value.trim(),
+      address: document.getElementById("chk-address").value.trim()
+    };
+    var notes = document.getElementById("chk-notes").value.trim();
+    var paymentMethod = document.getElementById("chk-payment").value;
+    var submitBtn = document.getElementById("btn-submit-order");
+    submitBtn.textContent = "Authenticating & Saving to MongoDB Atlas...";
+    submitBtn.disabled = true;
+
+    var payload = {
+      customer: customer,
+      items: Cart.items.map(function(it){
+        return {
+          watchId: it.id,
+          name: it.name,
+          collectionName: it.collection || 'Heritage',
+          price: it.price,
+          quantity: it.qty,
+          img: it.img
+        };
+      }),
+      paymentMethod: paymentMethod,
+      notes: notes
+    };
+
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      submitBtn.textContent = "Confirm Order & Save to MongoDB Atlas";
+      submitBtn.disabled = false;
+      if(res.success){
+        var ordId = res.data ? res.data.orderId : 'NEW';
+        showToast("Order " + ordId + " confirmed in MongoDB Atlas!");
+        Cart.items = [];
+        Cart.save();
+        Cart.render();
+        Cart.badge();
+        Checkout.close();
+        OrderVault.open();
+      } else {
+        document.getElementById("checkout-error").textContent = res.error || "Failed to place order";
+      }
+    })
+    .catch(function(err){
+      submitBtn.textContent = "Confirm Order & Save to MongoDB Atlas";
+      submitBtn.disabled = false;
+      document.getElementById("checkout-error").textContent = "Network error connecting to MongoDB server";
+    });
+  });
+
+  // Initial Load of Orders from MongoDB Atlas
+  OrderVault.loadOrders();
 
   // Auth tabs
   document.querySelectorAll(".auth-tab").forEach(function(tab){
@@ -962,6 +1381,19 @@
         style.innerHTML = '.watch-card-img-wrap { height: 280px !important; aspect-ratio: auto !important; } .collection-header { margin-bottom: 36px !important; } #collection { padding: 100px 60px 40px !important; }';
         document.head.appendChild(style);
       }
+    }
+    if (focusId === 'orders') {
+      setTimeout(function() {
+        OrderVault.open();
+      }, 150);
+    }
+    if (focusId === 'checkout') {
+      Cart.items = [
+        { id: 1, name: "AUREUM Chronograde I", price: 485000, qty: 1, collection: "Heritage", img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&q=90&auto=format&fit=crop" }
+      ];
+      setTimeout(function() {
+        Checkout.open();
+      }, 150);
     }
   }
   var targetY = parseInt(qp.get('y'));

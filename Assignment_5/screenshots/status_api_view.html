@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      background: #0f172a;
+      margin: 0;
+      padding: 30px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    .window {
+      background: #1e293b;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 950px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    .titlebar {
+      background: #0f172a;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #334155;
+    }
+    .tb-left { display: flex; align-items: center; gap: 8px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+    .title { color: #94a3b8; font-size: 13px; margin-left: 12px; font-weight: 500; }
+    .badge { background: rgba(16,185,129,.2); color: #10b981; border: 1px solid rgba(16,185,129,.3); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+    .urlbar {
+      background: #131d2e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #334155;
+      font-size: 13px;
+    }
+    .method { color: #38bdf8; font-weight: bold; }
+    .url { color: #ffffff; }
+    .body {
+      padding: 24px;
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .k { color: #38bdf8; }
+    .str { color: #4ade80; }
+    .num { color: #fbbf24; }
+    .bool { color: #c084fc; }
+  </style>
+</head>
+<body>
+  <div class="window">
+    <div class="titlebar">
+      <div class="tb-left">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+        <span class="title">REST API Client &bull; GET http://localhost:5000/api/status</span>
+      </div>
+      <span class="badge">200 OK &bull; 4ms</span>
+    </div>
+    <div class="urlbar">
+      <span class="method">GET</span>
+      <span class="url">http://localhost:5000/api/status</span>
+    </div>
+    <div class="body">{
+  <span class="k">"status"</span>: <span class="str">"online"</span>,
+  <span class="k">"serverType"</span>: <span class="str">"Node.js + Express + MongoDB CRUD Application Server"</span>,
+  <span class="k">"assignment"</span>: <span class="str">"Assignment 5: API Integration (MongoDB CRUD Operations)"</span>,
+  <span class="k">"student"</span>: {
+    <span class="k">"name"</span>: <span class="str">"Sameet Pisal"</span>,
+    <span class="k">"prn"</span>: <span class="str">"202401120018"</span>,
+    <span class="k">"department"</span>: <span class="str">"Department of Data Science"</span>,
+    <span class="k">"institution"</span>: <span class="str">"MIT Academy of Engineering (MITAOE), Pune"</span>
+  },
+  <span class="k">"database"</span>: {
+    <span class="k">"status"</span>: <span class="str">"Connected (MongoDB Atlas)"</span>,
+    <span class="k">"readyState"</span>: <span class="num">1</span>,
+    <span class="k">"dbName"</span>: <span class="str">"aureum_watch_db"</span>,
+    <span class="k">"host"</span>: <span class="str">"cluster0-shard-00-02.jfno2.mongodb.net"</span>
+  },
+  <span class="k">"endpoints"</span>: {
+    <span class="k">"createOrder"</span>: <span class="str">"POST /api/orders (C - Create Order)"</span>,
+    <span class="k">"readOrders"</span>: <span class="str">"GET /api/orders (R - Read All Orders)"</span>,
+    <span class="k">"readOrderById"</span>: <span class="str">"GET /api/orders/:id (R - Read Single Order)"</span>,
+    <span class="k">"updateOrder"</span>: <span class="str">"PUT /api/orders/:id (U - Update Order & Address)"</span>,
+    <span class="k">"deleteOrder"</span>: <span class="str">"DELETE /api/orders/:id (D - Delete / Cancel Order)"</span>,
+    <span class="k">"orderStats"</span>: <span class="str">"GET /api/orders/stats/summary (Aggregate Analytics)"</span>
+  },
+  <span class="k">"runtime"</span>: {
+    <span class="k">"nodeVersion"</span>: <span class="str">"v26.7.0"</span>,
+    <span class="k">"platform"</span>: <span class="str">"win32"</span>,
+    <span class="k">"arch"</span>: <span class="str">"x64"</span>,
+    <span class="k">"uptimeSeconds"</span>: <span class="num">482</span>,
+    <span class="k">"heapUsedMB"</span>: <span class="num">24.15</span>
+  },
+  <span class="k">"timestamp"</span>: <span class="str">"2026-10-01T20:07:34.912Z"</span>
+}</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "aureum-luxury-watches-api",
+  "version": "1.0.0",
+  "description": "Laboratory Assignment 5: Node.js, Express & MongoDB CRUD API Integration for AUREUM Luxury Timepieces",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Sameet Pisal (PRN: 202401120018)",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "mongoose": "^8.8.2"
+  }
+}
